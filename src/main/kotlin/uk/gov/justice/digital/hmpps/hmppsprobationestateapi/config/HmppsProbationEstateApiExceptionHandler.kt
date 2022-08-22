@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.BAD_REQUEST
 import org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.AccessDeniedException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import javax.validation.ValidationException
@@ -20,6 +21,19 @@ class HmppsProbationEstateApiExceptionHandler {
         ErrorResponse(
           status = BAD_REQUEST,
           userMessage = "Validation failure: ${e.message}",
+          developerMessage = e.message
+        )
+      )
+  }
+
+  @ExceptionHandler(AccessDeniedException::class)
+  fun handleAccessDeniedException(e: Exception): ResponseEntity<ErrorResponse> {
+    return ResponseEntity
+      .status(HttpStatus.FORBIDDEN)
+      .body(
+        ErrorResponse(
+          status = HttpStatus.FORBIDDEN,
+          userMessage = "Access is denied",
           developerMessage = e.message
         )
       )
