@@ -45,3 +45,4 @@ generic-service:
 
 generic-prometheus-alerts:
   targetApplication: hmpps-probation-estate-api
+  alertSeverity: hmpps-tier
