@@ -6,10 +6,10 @@ orbs:
 parameters:
   alerts-slack-channel:
     type: string
-    default: dps_alerts_security
+    default: manage_a_workforce_dev
   releases-slack-channel:
     type: string
-    default: dps-releases
+    default: manage_a_workforce_dev
 
 jobs:
   validate:
@@ -52,6 +52,8 @@ workflows:
       - hmpps/deploy_env:
           name: deploy_dev
           env: "dev"
+          jira_update: true
+          jira_env_type: development
           context: hmpps-common-vars
           filters:
             branches:
@@ -68,9 +70,11 @@ workflows:
 #      - hmpps/deploy_env:
 #          name: deploy_preprod
 #          env: "preprod"
+#          jira_update: true
+#          jira_env_type: staging
 #          context:
 #            - hmpps-common-vars
-#            - hmpps-template-kotlin-preprod
+#            - hmpps-probation-estate-api-preprod
 #          requires:
 #            - request-preprod-approval
 #      - request-prod-approval:
@@ -80,18 +84,20 @@ workflows:
 #      - hmpps/deploy_env:
 #          name: deploy_prod
 #          env: "prod"
+#          jira_update: true
+#          jira_env_type: production
 #          slack_notification: true
 #          slack_channel_name: << pipeline.parameters.releases-slack-channel >>
 #          context:
 #            - hmpps-common-vars
-#            - hmpps-template-kotlin-prod
+#            - hmpps-probation-estate-api-prod
 #          requires:
 #            - request-prod-approval
 
   security:
     triggers:
       - schedule:
-          cron: "11 5 * * 1-5"
+          cron: "2 5 * * 1-5"
           filters:
             branches:
               only:
@@ -111,19 +117,19 @@ workflows:
 #          context:
 #            - veracode-credentials
 #            - hmpps-common-vars
-  security-weekly:
-    triggers:
-      - schedule:
-          cron: "0 5 * * 1"
-          filters:
-            branches:
-              only:
-                - main
-    jobs:
-      - hmpps/veracode_policy_scan:
-          slack_channel: << pipeline.parameters.alerts-slack-channel >>
-          context:
-            - veracode-credentials
-            - hmpps-common-vars
+#  security-weekly:
+#    triggers:
+#      - schedule:
+#          cron: "10 5 * * 1"
+#          filters:
+#            branches:
+#              only:
+#                - main
+#    jobs:
+#      - hmpps/veracode_policy_scan:
+#          slack_channel: << pipeline.parameters.alerts-slack-channel >>
+#          context:
+#            - veracode-credentials
+#            - hmpps-common-vars
 
 
