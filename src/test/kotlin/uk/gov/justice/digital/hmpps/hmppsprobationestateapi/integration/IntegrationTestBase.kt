@@ -16,6 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDO
 import org.springframework.http.HttpHeaders
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.reactive.server.WebTestClient
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.ProbationDeliveryUnitRepository
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.RegionRepository
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.TeamRepository
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ActiveProfiles("test")
@@ -35,10 +38,23 @@ abstract class IntegrationTestBase {
   @Autowired
   protected lateinit var jwtAuthHelper: JwtAuthHelper
 
+  @Autowired
+  protected lateinit var regionRepository: RegionRepository
+
+  @Autowired
+  protected lateinit var probationDeliveryUnitRepository: ProbationDeliveryUnitRepository
+
+  @Autowired
+  protected lateinit var teamRepository: TeamRepository
+
   @BeforeEach
   fun setupDependentServices() {
     oauthMock.reset()
     setupOauth()
+    teamRepository.deleteAll()
+      .then(probationDeliveryUnitRepository.deleteAll())
+      .then(regionRepository.deleteAll())
+      .block()
   }
 
   @AfterAll
