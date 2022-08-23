@@ -11,6 +11,8 @@ val springDocVersion by extra("1.6.10")
 
 dependencies {
   implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+  runtimeOnly("org.springframework.boot:spring-boot-starter-jdbc")
+
   implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
   implementation("org.springframework.boot:spring-boot-starter-webflux")
 
@@ -20,6 +22,7 @@ dependencies {
 
   runtimeOnly("org.flywaydb:flyway-core")
   runtimeOnly("io.r2dbc:r2dbc-postgresql:0.8.12.RELEASE")
+  runtimeOnly("org.postgresql:postgresql")
 
   testImplementation("io.jsonwebtoken:jjwt:0.9.1")
   testImplementation("org.mock-server:mockserver-netty:5.13.2")
