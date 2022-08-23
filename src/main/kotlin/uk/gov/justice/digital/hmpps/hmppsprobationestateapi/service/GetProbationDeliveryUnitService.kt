@@ -16,7 +16,7 @@ class GetProbationDeliveryUnitService(
     probationDeliveryUnitRepository.findById(code)
       .hasElement()
       .flatMapMany { exists ->
-        if(exists) {
+        if (exists) {
           return@flatMapMany teamRepository.findByPduCode(code).map { team ->
             TeamOverview(team.code, team.name)
           }
@@ -24,4 +24,3 @@ class GetProbationDeliveryUnitService(
         throw EntityNotFoundException("No Probation Delivery Unit found at $code")
       }
 }
-
