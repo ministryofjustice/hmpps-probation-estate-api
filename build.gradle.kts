@@ -4,12 +4,18 @@ plugins {
 }
 
 configurations {
+  implementation { exclude(module = "spring-boot-starter-web") }
+  implementation { exclude(module = "spring-boot-starter-tomcat") }
   testImplementation { exclude(group = "org.junit.vintage") }
 }
 
 val springDocVersion by extra("1.6.10")
 
 dependencies {
+
+  implementation("io.jsonwebtoken:jjwt:0.9.1")
+  implementation("io.opentelemetry:opentelemetry-api:1.17.0")
+
   implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
   runtimeOnly("org.springframework.boot:spring-boot-starter-jdbc")
 
@@ -18,13 +24,11 @@ dependencies {
 
   implementation("org.springdoc:springdoc-openapi-webflux-ui:$springDocVersion")
   implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
-  implementation("org.springdoc:springdoc-openapi-data-rest:$springDocVersion")
 
   runtimeOnly("org.flywaydb:flyway-core")
   runtimeOnly("io.r2dbc:r2dbc-postgresql:0.8.12.RELEASE")
   runtimeOnly("org.postgresql:postgresql")
 
-  testImplementation("io.jsonwebtoken:jjwt:0.9.1")
   testImplementation("org.mock-server:mockserver-netty:5.13.2")
 }
 

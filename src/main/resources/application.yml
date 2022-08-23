@@ -2,6 +2,11 @@ info.app:
   name: Hmpps Probation Estate Api
   version: 1.0
 
+azure:
+  application-insights:
+    web:
+      enabled: false
+
 spring:
   application:
     name: hmpps-probation-estate-api
