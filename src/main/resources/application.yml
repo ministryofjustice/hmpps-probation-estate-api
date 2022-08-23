@@ -7,7 +7,12 @@ spring:
     name: hmpps-probation-estate-api
   codec:
     max-in-memory-size: 10MB
-
+  r2dbc:
+    url: "r2dbc:postgresql://${database.endpoint:localhost:5432}/${database.name:postgres}"
+    username: "${database.username:root}"
+    password: "${database.password:dev}"
+  flyway:
+    locations: classpath:db/migration
   jackson:
     date-format: "yyyy-MM-dd HH:mm:ss"
     serialization:
