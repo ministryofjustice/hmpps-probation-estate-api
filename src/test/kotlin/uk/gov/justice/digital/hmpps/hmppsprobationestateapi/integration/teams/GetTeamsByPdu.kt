@@ -28,4 +28,14 @@ class GetTeamsByPdu : IntegrationTestBase() {
       .jsonPath("$.[0].code").isEqualTo(team.code)
       .jsonPath("$.[0].name").isEqualTo(team.name)
   }
+
+  @Test
+  fun `Not found if retrieving a PDU which is not at code`() {
+    webTestClient.get()
+      .uri("/probationDeliveryUnit/PDUNOTFOUND/teams")
+      .headers { it.authToken(roles = listOf("ROLE_MANAGE_A_WORKFORCE_ALLOCATE")) }
+      .exchange()
+      .expectStatus()
+      .isNotFound
+  }
 }
