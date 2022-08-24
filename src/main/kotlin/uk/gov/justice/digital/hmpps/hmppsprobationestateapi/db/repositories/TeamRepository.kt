@@ -5,5 +5,5 @@ import reactor.core.publisher.Flux
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.Team
 
 interface TeamRepository : ReactiveCrudRepository<Team, String> {
-  fun findByPduCode(pduCode: String): Flux<Team>
+  // I think the SQL can be put here and it will just work, but not tried it yet
 }

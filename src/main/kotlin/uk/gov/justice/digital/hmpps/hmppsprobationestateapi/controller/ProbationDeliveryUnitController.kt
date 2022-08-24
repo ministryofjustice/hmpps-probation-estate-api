@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamOverview
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.exception.EntityNotFoundException
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.service.GetProbationDeliveryUnitService
 
 @RestController
@@ -30,4 +32,6 @@ class ProbationDeliveryUnitController(
   @GetMapping("/probationDeliveryUnit/{code}/teams")
   fun getProbationDeliveryUnitByCode(@PathVariable(required = true) code: String): Flux<TeamOverview> =
     getProbationDeliveryUnitService.findByCode(code)
+//      .switchIfEmpty { Mono.error<EntityNotFoundException>(EntityNotFoundException("No Probation Delivery Unit found at $code")) }
+
 }
