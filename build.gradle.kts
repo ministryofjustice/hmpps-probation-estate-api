@@ -27,7 +27,7 @@ dependencies {
 
   runtimeOnly("org.flywaydb:flyway-core")
   runtimeOnly("io.r2dbc:r2dbc-postgresql:0.8.12.RELEASE")
-  runtimeOnly("org.postgresql:postgresql")
+  runtimeOnly("org.postgresql:postgresql:42.4.2")
 
   testImplementation("org.mock-server:mockserver-netty:5.13.2")
 }

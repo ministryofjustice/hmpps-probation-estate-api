@@ -13,8 +13,7 @@ class GetProbationDeliveryUnitService(
   private val teamRepository: TeamRepository
 ) {
   fun findByCode(code: String): Flux<TeamOverview> =
-    probationDeliveryUnitRepository.findById(code)
-      .hasElement()
+    probationDeliveryUnitRepository.existsById(code)
       .flatMapMany { exists ->
         if (exists) {
           return@flatMapMany teamRepository.findByPduCode(code).map { team ->
