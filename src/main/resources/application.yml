@@ -19,7 +19,7 @@ spring:
     pool:
       max-life-time: -1
   flyway:
-    url: "jdbc:postgresql://${database.endpoint:localhost:5432}/${database.name:postgres}"
+    url: "jdbc:postgresql://${database.endpoint:localhost:5432}/${database.name:postgres}?sslmode=verify-full"
     user: "${database.username:root}"
     password: "${database.password:dev}"
   jackson:
@@ -55,7 +55,7 @@ management:
     web:
       base-path: /
       exposure:
-        include: 'info, health'
+        include: 'info, health, env'
   endpoint:
     health:
       cache:
