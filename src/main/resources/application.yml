@@ -16,6 +16,8 @@ spring:
     url: "r2dbc:postgresql://${database.endpoint:localhost:5432}/${database.name:postgres}"
     username: "${database.username:root}"
     password: "${database.password:dev}"
+    pool:
+      max-life-time: -1
   flyway:
     url: "jdbc:postgresql://${database.endpoint:localhost:5432}/${database.name:postgres}"
     user: "${database.username:root}"
