@@ -11,3 +11,9 @@ oauth:
     client:
       id: client-id
       secret: client-secret
+
+spring:
+  r2dbc:
+    properties:
+      sslMode: DISABLE
+      sslRootCert:

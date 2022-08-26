@@ -18,6 +18,9 @@ spring:
     password: "${database.password:dev}"
     pool:
       max-life-time: -1
+    properties:
+      ssl: true
+      sslRootCert: /home/appuser/.postgresql/root.crt
   flyway:
     url: "jdbc:postgresql://${database.endpoint:localhost:5432}/${database.name:postgres}"
     user: "${database.username:root}"
@@ -55,7 +58,7 @@ management:
     web:
       base-path: /
       exposure:
-        include: 'info, health, env'
+        include: 'info, health'
   endpoint:
     health:
       cache:

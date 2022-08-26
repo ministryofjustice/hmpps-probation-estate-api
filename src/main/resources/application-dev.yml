@@ -1,0 +1,9 @@
+
+oauth:
+  endpoint.url: http://localhost:9080/auth
+
+spring:
+  r2dbc:
+    properties:
+      sslMode: DISABLE
+      sslRootCert:

@@ -23,8 +23,6 @@ generic-service:
     SPRING_PROFILES_ACTIVE: "logstash"
     APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=$(APPINSIGHTS_INSTRUMENTATIONKEY)"
     APPLICATIONINSIGHTS_CONFIGURATION_FILE: applicationinsights.json
-    SPRING_R2DBC_PROPERTIES_SSL: true
-    SPRING_R2DBC_PROPERTIES_SSL_ROOT_CERT: "/home/appuser/.postgresql/root.crt"
 
   livenessProbe:
     httpGet:

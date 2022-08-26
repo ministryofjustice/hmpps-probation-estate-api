@@ -27,7 +27,7 @@ class ResourceServerConfiguration {
       .authorizeExchange {
         it.pathMatchers(
           "/webjars/**", "/favicon.ico", "/csrf",
-          "/health/**", "/info", "/env",
+          "/health/**", "/info",
           "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/readiness-profiles/**"
         ).permitAll()
           .anyExchange().authenticated()
