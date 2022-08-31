@@ -16,6 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDO
 import org.springframework.http.HttpHeaders
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.reactive.server.WebTestClient
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.ProbationDeliveryUnit
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.Region
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.Team
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.ProbationDeliveryUnitRepository
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.RegionRepository
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.TeamRepository
@@ -76,5 +79,21 @@ abstract class IntegrationTestBase {
     val response = HttpResponse.response().withContentType(MediaType.APPLICATION_JSON)
       .withBody(objectMapper.writeValueAsString(mapOf("access_token" to "ABCDE", "token_type" to "bearer")))
     oauthMock.`when`(HttpRequest.request().withPath("/auth/oauth/token")).respond(response)
+  }
+
+  fun setupTeam(teamCode: String = "TM1"): Team {
+    val region = Region(code = "REGION1", name = "Region Name", new = true)
+    val probationDeliveryUnit = ProbationDeliveryUnit(code = "PDU1", name = "PDU Name", regionCode = region.code, new = true)
+    val team = Team(code = teamCode, name = "Team Name", pduCode = probationDeliveryUnit.code, new = true)
+    return regionRepository.existsById(region.code)
+      .filter { !it }
+      .flatMap { regionRepository.save(region) }
+      .then(
+        probationDeliveryUnitRepository.existsById(probationDeliveryUnit.code)
+          .filter { !it }
+          .flatMap { probationDeliveryUnitRepository.save(probationDeliveryUnit) }
+      ).then(
+        teamRepository.save(team)
+      ).block()!!
   }
 }
