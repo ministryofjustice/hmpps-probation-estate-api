@@ -1,2 +1,13 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9090/auth/.well-known/jwks.json
+
 oauth:
-  endpoint.url: http://hmpps-auth:8080/auth
+  endpoint:
+    url: http://localhost:9090/auth
+  client:
+    id: hmpps-probation-estate
+    secret: clientsecret
