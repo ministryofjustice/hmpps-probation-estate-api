@@ -27,6 +27,6 @@ class TeamController(
   )
   @PreAuthorize("hasRole('ROLE_MANAGE_A_WORKFORCE_ALLOCATE')")
   @GetMapping("/team/search")
-  fun getProbationDeliveryUnitByCode(@RequestParam(required = true) codes: List<String>): Flux<TeamOverview> =
+  fun getTeamsByCode(@RequestParam(required = true) codes: List<String>): Flux<TeamOverview> =
     getTeamService.findTeamsByCode(codes)
 }
