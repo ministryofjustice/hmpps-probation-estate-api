@@ -26,7 +26,7 @@ dependencies {
   implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
 
   runtimeOnly("org.flywaydb:flyway-core")
-  runtimeOnly("org.postgresql:r2dbc-postgresql:0.9.1.RELEASE")
+  runtimeOnly("org.postgresql:r2dbc-postgresql:0.9.2.RELEASE")
   runtimeOnly("org.postgresql:postgresql:42.5.0")
 
   testImplementation("org.mock-server:mockserver-netty:5.14.0")
