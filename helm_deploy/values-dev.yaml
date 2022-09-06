@@ -1,8 +1,6 @@
 ---
 
 generic-service:
-  replicaCount: 2
-
   ingress:
     host: hmpps-probation-estate-api-dev.hmpps.service.justice.gov.uk
 

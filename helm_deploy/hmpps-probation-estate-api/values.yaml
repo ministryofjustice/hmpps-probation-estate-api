@@ -2,7 +2,7 @@
 generic-service:
   nameOverride: hmpps-probation-estate-api
 
-  replicaCount: 4
+  replicaCount: 2
 
   image:
     repository: quay.io/hmpps/hmpps-probation-estate-api
