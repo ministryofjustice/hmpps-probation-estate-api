@@ -14,7 +14,7 @@ val springDocVersion by extra("1.6.11")
 dependencies {
 
   implementation("io.jsonwebtoken:jjwt:0.9.1")
-  implementation("io.opentelemetry:opentelemetry-api:1.17.0")
+  implementation("io.opentelemetry:opentelemetry-api:1.18.0")
 
   implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
   runtimeOnly("org.springframework.boot:spring-boot-starter-jdbc")
