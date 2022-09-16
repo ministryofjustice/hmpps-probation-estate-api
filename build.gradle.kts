@@ -1,5 +1,5 @@
 plugins {
-  id("uk.gov.justice.hmpps.gradle-spring-boot") version "4.5.0"
+  id("uk.gov.justice.hmpps.gradle-spring-boot") version "4.5.1-beta"
   kotlin("plugin.spring") version "1.7.10"
 }
 
@@ -7,6 +7,10 @@ configurations {
   implementation { exclude(module = "spring-boot-starter-web") }
   implementation { exclude(module = "spring-boot-starter-tomcat") }
   testImplementation { exclude(group = "org.junit.vintage") }
+}
+
+dependencyCheck {
+  suppressionFiles.add("suppressions.xml")
 }
 
 val springDocVersion by extra("1.6.11")
@@ -50,3 +54,5 @@ tasks {
 tasks.named<JavaExec>("bootRun") {
   systemProperty("spring.profiles.active", "dev,docker")
 }
+
+
