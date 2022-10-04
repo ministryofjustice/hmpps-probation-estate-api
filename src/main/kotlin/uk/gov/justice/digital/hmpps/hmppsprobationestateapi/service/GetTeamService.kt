@@ -13,11 +13,7 @@ class GetTeamService(private val teamRepository: TeamRepository) {
     .map { TeamOverview(it.code, it.name) }
 
   fun findTeamByCode(teamCode: String): Mono<TeamOverview> = teamRepository
-    .existsById(teamCode)
-    .flatMap { exists ->
-      if (exists) {
-        return@flatMap teamRepository.findById(teamCode).map { TeamOverview(it.code, it.name) }
-      }
-      throw EntityNotFoundException("No team found for $teamCode")
-    }
+    .findById(teamCode)
+    .map { TeamOverview(it.code, it.name) }
+    .switchIfEmpty(Mono.error(EntityNotFoundException("No team found for $teamCode")))
 }
