@@ -10,7 +10,6 @@ class SearchTeamsByCode : IntegrationTestBase() {
     val team = setupTeam()
     webTestClient.get()
       .uri("/team/search?codes=${team.code}")
-      .headers { it.authToken(roles = listOf("ROLE_MANAGE_A_WORKFORCE_ALLOCATE")) }
       .exchange()
       .expectStatus()
       .isOk
@@ -26,7 +25,6 @@ class SearchTeamsByCode : IntegrationTestBase() {
 
     webTestClient.get()
       .uri("/team/search?codes=${team.code},${secondTeam.code}")
-      .headers { it.authToken(roles = listOf("ROLE_MANAGE_A_WORKFORCE_ALLOCATE")) }
       .exchange()
       .expectStatus()
       .isOk

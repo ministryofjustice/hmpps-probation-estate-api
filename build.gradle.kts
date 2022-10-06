@@ -17,13 +17,9 @@ val springDocVersion by extra("1.6.11")
 
 dependencies {
 
-  implementation("io.jsonwebtoken:jjwt:0.9.1")
-  implementation("io.opentelemetry:opentelemetry-api:1.18.0")
-
   implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
   runtimeOnly("org.springframework.boot:spring-boot-starter-jdbc")
 
-  implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
   implementation("org.springframework.boot:spring-boot-starter-webflux")
 
   implementation("org.springdoc:springdoc-openapi-webflux-ui:$springDocVersion")
@@ -32,8 +28,6 @@ dependencies {
   runtimeOnly("org.flywaydb:flyway-core")
   runtimeOnly("org.postgresql:r2dbc-postgresql:0.9.2.RELEASE")
   runtimeOnly("org.postgresql:postgresql:42.5.0")
-
-  testImplementation("org.mock-server:mockserver-netty:5.14.0")
 }
 
 java {
