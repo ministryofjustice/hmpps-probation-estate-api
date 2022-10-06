@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import org.springframework.http.MediaType
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
@@ -26,7 +25,6 @@ class ProbationDeliveryUnitController(
       ApiResponse(responseCode = "404", description = "Result Not Found")
     ]
   )
-  @PreAuthorize("hasRole('ROLE_MANAGE_A_WORKFORCE_ALLOCATE')")
   @GetMapping("/probationDeliveryUnit/{code}/teams")
   fun getProbationDeliveryUnitByCode(@PathVariable(required = true) code: String): Flux<TeamOverview> =
     getProbationDeliveryUnitService.findByCode(code)

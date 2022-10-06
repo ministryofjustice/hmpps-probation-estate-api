@@ -20,7 +20,6 @@ class GetTeamsByPdu : IntegrationTestBase() {
 
     webTestClient.get()
       .uri("/probationDeliveryUnit/${probationDeliveryUnit.code}/teams")
-      .headers { it.authToken(roles = listOf("ROLE_MANAGE_A_WORKFORCE_ALLOCATE")) }
       .exchange()
       .expectStatus()
       .isOk
@@ -33,7 +32,6 @@ class GetTeamsByPdu : IntegrationTestBase() {
   fun `Not found if retrieving a PDU which is not at code`() {
     webTestClient.get()
       .uri("/probationDeliveryUnit/PDUNOTFOUND/teams")
-      .headers { it.authToken(roles = listOf("ROLE_MANAGE_A_WORKFORCE_ALLOCATE")) }
       .exchange()
       .expectStatus()
       .isNotFound

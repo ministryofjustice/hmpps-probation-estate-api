@@ -23,7 +23,6 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
   runtimeOnly("org.springframework.boot:spring-boot-starter-jdbc")
 
-  implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
   implementation("org.springframework.boot:spring-boot-starter-webflux")
 
   implementation("org.springdoc:springdoc-openapi-webflux-ui:$springDocVersion")
