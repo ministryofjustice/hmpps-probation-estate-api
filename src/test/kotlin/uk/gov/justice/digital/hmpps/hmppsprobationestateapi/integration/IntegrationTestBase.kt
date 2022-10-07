@@ -1,5 +1,6 @@
 package uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration
 
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestInstance
 import org.springframework.beans.factory.annotation.Autowired
@@ -33,25 +34,24 @@ abstract class IntegrationTestBase {
   protected lateinit var teamRepository: TeamRepository
 
   @BeforeEach
-  fun setupDependentServices() {
+  fun setupDependentServices() = runBlocking {
     teamRepository.deleteAll()
       .then(probationDeliveryUnitRepository.deleteAll())
-      .then(regionRepository.deleteAll())
       .block()
+    regionRepository.deleteAll()
   }
 
-  fun setupTeam(teamCode: String = "TM1"): Team {
+  fun setupTeam(teamCode: String = "TM1"): Team = runBlocking {
     val region = Region(code = "REGION1", name = "Region Name", new = true)
     val probationDeliveryUnit = ProbationDeliveryUnit(code = "PDU1", name = "PDU Name", regionCode = region.code, new = true)
     val team = Team(code = teamCode, name = "Team Name", pduCode = probationDeliveryUnit.code, new = true)
-    return regionRepository.existsById(region.code)
+    if (!regionRepository.existsById(region.code)) {
+      regionRepository.save(region)
+    }
+    probationDeliveryUnitRepository.existsById(probationDeliveryUnit.code)
       .filter { !it }
-      .flatMap { regionRepository.save(region) }
+      .flatMap { probationDeliveryUnitRepository.save(probationDeliveryUnit) }
       .then(
-        probationDeliveryUnitRepository.existsById(probationDeliveryUnit.code)
-          .filter { !it }
-          .flatMap { probationDeliveryUnitRepository.save(probationDeliveryUnit) }
-      ).then(
         teamRepository.save(team)
       ).block()!!
   }
