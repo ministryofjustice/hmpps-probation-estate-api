@@ -22,12 +22,17 @@ dependencies {
 
   implementation("org.springframework.boot:spring-boot-starter-webflux")
 
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.0")
+
   implementation("org.springdoc:springdoc-openapi-webflux-ui:$springDocVersion")
   implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
 
   runtimeOnly("org.flywaydb:flyway-core")
   runtimeOnly("org.postgresql:r2dbc-postgresql:0.9.2.RELEASE")
   runtimeOnly("org.postgresql:postgresql:42.5.0")
+
+  testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
 }
 
 java {
