@@ -1,7 +1,8 @@
 package uk.gov.justice.digital.hmpps.hmppsprobationestateapi.service
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import org.springframework.stereotype.Service
-import reactor.core.publisher.Flux
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamOverview
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.ProbationDeliveryUnitRepository
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.TeamRepository
@@ -12,14 +13,12 @@ class GetProbationDeliveryUnitService(
   private val probationDeliveryUnitRepository: ProbationDeliveryUnitRepository,
   private val teamRepository: TeamRepository
 ) {
-  fun findByCode(code: String): Flux<TeamOverview> =
-    probationDeliveryUnitRepository.existsById(code)
-      .flatMapMany { exists ->
-        if (exists) {
-          return@flatMapMany teamRepository.findByPduCode(code).map { team ->
-            TeamOverview(team.code, team.name)
-          }
-        }
-        throw EntityNotFoundException("No Probation Delivery Unit found at $code")
+  suspend fun findByCode(code: String): Flow<TeamOverview> {
+    if (probationDeliveryUnitRepository.existsById(code)) {
+      return teamRepository.findByPduCode(code).map { team ->
+        TeamOverview(team.code, team.name)
       }
+    }
+    throw EntityNotFoundException("No Probation Delivery Unit found at $code")
+  }
 }

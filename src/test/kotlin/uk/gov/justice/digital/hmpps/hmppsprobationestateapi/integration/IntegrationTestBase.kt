@@ -36,8 +36,7 @@ abstract class IntegrationTestBase {
   @BeforeEach
   fun setupDependentServices() = runBlocking {
     teamRepository.deleteAll()
-      .then(probationDeliveryUnitRepository.deleteAll())
-      .block()
+    probationDeliveryUnitRepository.deleteAll()
     regionRepository.deleteAll()
   }
 
@@ -48,11 +47,9 @@ abstract class IntegrationTestBase {
     if (!regionRepository.existsById(region.code)) {
       regionRepository.save(region)
     }
-    probationDeliveryUnitRepository.existsById(probationDeliveryUnit.code)
-      .filter { !it }
-      .flatMap { probationDeliveryUnitRepository.save(probationDeliveryUnit) }
-      .then(
-        teamRepository.save(team)
-      ).block()!!
+    if (!probationDeliveryUnitRepository.existsById(probationDeliveryUnit.code)) {
+      probationDeliveryUnitRepository.save(probationDeliveryUnit)
+    }
+    teamRepository.save(team)
   }
 }
