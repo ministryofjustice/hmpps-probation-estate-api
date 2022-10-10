@@ -1,9 +1,9 @@
 package uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories
 
-import org.springframework.data.repository.reactive.ReactiveCrudRepository
-import reactor.core.publisher.Flux
+import kotlinx.coroutines.flow.Flow
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.Team
 
-interface TeamRepository : ReactiveCrudRepository<Team, String> {
-  fun findByPduCode(pduCode: String): Flux<Team>
+interface TeamRepository : CoroutineCrudRepository<Team, String> {
+  suspend fun findByPduCode(pduCode: String): Flow<Team>
 }

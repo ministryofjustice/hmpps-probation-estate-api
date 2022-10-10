@@ -17,8 +17,7 @@ class GetTeamsByPdu : IntegrationTestBase() {
 
     regionRepository.save(region)
     probationDeliveryUnitRepository.save(probationDeliveryUnit)
-      .then(teamRepository.save(team))
-      .block()
+    teamRepository.save(team)
 
     webTestClient.get()
       .uri("/probationDeliveryUnit/${probationDeliveryUnit.code}/teams")
