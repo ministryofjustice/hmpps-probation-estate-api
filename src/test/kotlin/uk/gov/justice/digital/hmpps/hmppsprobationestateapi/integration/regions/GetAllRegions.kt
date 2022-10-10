@@ -16,7 +16,7 @@ class GetAllRegions : IntegrationTestBase() {
         Region(code = "REGION2", name = "Second Region", new = true),
         Region(code = "REGION3", name = "Third Region", new = true)
       )
-    ).toList(ArrayList())
+    ).toList()
 
     webTestClient.get()
       .uri("/regions")

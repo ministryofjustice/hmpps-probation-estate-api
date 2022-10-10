@@ -6,9 +6,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import kotlinx.coroutines.flow.Flow
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.RegionDetails
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.RegionOverview
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.exception.EntityNotFoundException
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.service.GetRegionService
 
 @RestController
@@ -22,6 +25,16 @@ class RegionController(private val getRegionService: GetRegionService) {
     ]
   )
   @GetMapping("/regions")
-  suspend fun getTeamsByCode(): Flow<RegionOverview> =
+  suspend fun getAllRegions(): Flow<RegionOverview> =
     getRegionService.getAll()
+
+  @Operation(summary = "Get region by code")
+  @ApiResponses(
+    value = [
+      ApiResponse(responseCode = "200", description = "OK")
+    ]
+  )
+  @GetMapping("/region/{code}")
+  suspend fun getRegionByCode(@PathVariable(required = true) code: String): RegionDetails =
+    getRegionService.getRegionByCode(code) ?: throw EntityNotFoundException("No region found for $code")
 }

@@ -27,5 +27,5 @@ class ProbationDeliveryUnitController(
   )
   @GetMapping("/probationDeliveryUnit/{code}/teams")
   suspend fun getProbationDeliveryUnitByCode(@PathVariable(required = true) code: String): Flow<TeamOverview> =
-    getProbationDeliveryUnitService.findByCode(code)
+    getProbationDeliveryUnitService.findTeamsByCode(code)
 }
