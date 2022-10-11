@@ -34,7 +34,8 @@ class ProbationDeliveryUnitController(
   @Operation(summary = "Get Probation Delivery Unit by code")
   @ApiResponses(
     value = [
-      ApiResponse(responseCode = "200", description = "OK")
+      ApiResponse(responseCode = "200", description = "OK"),
+      ApiResponse(responseCode = "404", description = "Result Not Found")
     ]
   )
   @GetMapping("/probationDeliveryUnit/{code}")
