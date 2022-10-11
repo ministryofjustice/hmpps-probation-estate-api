@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.ProbationDeliveryUnitDetails
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.RegionOverview
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamOverview
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.ProbationDeliveryUnit
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.ProbationDeliveryUnitRepository
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.RegionRepository
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.TeamRepository
@@ -28,7 +27,6 @@ class GetProbationDeliveryUnitService(
     throw EntityNotFoundException("No Probation Delivery Unit found at $code")
   }
 
-  suspend fun findByRegionCode(regionCode: String): Flow<ProbationDeliveryUnit> = probationDeliveryUnitRepository.findByRegionCode(regionCode)
   suspend fun getProbationDeliveryUnitByCode(code: String): ProbationDeliveryUnitDetails? = probationDeliveryUnitRepository.findById(code)?.let {
     val region = regionRepository.findById(it.regionCode)!!.let { region -> RegionOverview(region.code, region.name) }
     val teams = teamRepository.findByPduCode(code).map { team ->
