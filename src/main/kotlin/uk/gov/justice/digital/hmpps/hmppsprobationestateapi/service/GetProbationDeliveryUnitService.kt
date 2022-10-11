@@ -27,7 +27,7 @@ class GetProbationDeliveryUnitService(
     throw EntityNotFoundException("No Probation Delivery Unit found at $code")
   }
 
-  suspend fun getProbationDeliveryUnitByCode(code: String): ProbationDeliveryUnitDetails? = probationDeliveryUnitRepository.findById(code)?.let {
+  suspend fun getProbationDeliveryUnitDetailsByCode(code: String): ProbationDeliveryUnitDetails? = probationDeliveryUnitRepository.findById(code)?.let {
     val region = regionRepository.findById(it.regionCode)!!.let { region -> RegionOverview(region.code, region.name) }
     val teams = teamRepository.findByPduCode(code).map { team ->
       TeamOverview(team.code, team.name)

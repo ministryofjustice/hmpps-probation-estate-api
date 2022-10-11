@@ -39,5 +39,5 @@ class ProbationDeliveryUnitController(
   )
   @GetMapping("/probationDeliveryUnit/{code}")
   suspend fun getProbationDeliveryUnitByCode(@PathVariable(required = true) code: String): ProbationDeliveryUnitDetails =
-    getProbationDeliveryUnitService.getProbationDeliveryUnitByCode(code) ?: throw EntityNotFoundException("No Probation Delivery Unit found for $code")
+    getProbationDeliveryUnitService.getProbationDeliveryUnitDetailsByCode(code) ?: throw EntityNotFoundException("No Probation Delivery Unit found for $code")
 }
