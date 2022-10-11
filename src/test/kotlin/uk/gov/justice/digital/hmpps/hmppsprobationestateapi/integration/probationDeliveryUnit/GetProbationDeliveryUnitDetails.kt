@@ -17,7 +17,7 @@ class GetProbationDeliveryUnitDetails : IntegrationTestBase() {
     val secondTeam = teamRepository.save(Team(code = "TM2", name = "B Team", pduCode = probationDeliveryUnit.code, new = true))
 
     webTestClient.get()
-      .uri("/probationDeliveryUnit/${region.code}")
+      .uri("/probationDeliveryUnit/${probationDeliveryUnit.code}")
       .exchange()
       .expectStatus()
       .isOk
@@ -35,7 +35,7 @@ class GetProbationDeliveryUnitDetails : IntegrationTestBase() {
     val region = regionRepository.save(Region(code = "RG1", name = "Region 1", new = true))
     val probationDeliveryUnit = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU1", name = "PDU 1", regionCode = region.code, new = true))
     webTestClient.get()
-      .uri("/probationDeliveryUnit/${region.code}")
+      .uri("/probationDeliveryUnit/${probationDeliveryUnit.code}")
       .exchange()
       .expectStatus()
       .isOk

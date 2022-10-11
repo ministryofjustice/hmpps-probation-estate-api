@@ -9,17 +9,19 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.Regio
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamOverview
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.ProbationDeliveryUnit
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.ProbationDeliveryUnitRepository
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.RegionRepository
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.TeamRepository
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.exception.EntityNotFoundException
 
 @Service
 class GetProbationDeliveryUnitService(
   private val probationDeliveryUnitRepository: ProbationDeliveryUnitRepository,
-  private val getRegionService: GetRegionService,
-  private val getTeamService: GetTeamService
+  private val regionRepository: RegionRepository,
+  private val teamRepository: TeamRepository
 ) {
   suspend fun findTeamsByCode(code: String): Flow<TeamOverview> {
     if (probationDeliveryUnitRepository.existsById(code)) {
-      return getTeamService.findByProbationDeliveryUnitCode(code).map { team ->
+      return teamRepository.findByPduCode(code).map { team ->
         TeamOverview(team.code, team.name)
       }
     }
@@ -28,8 +30,8 @@ class GetProbationDeliveryUnitService(
 
   suspend fun findByRegionCode(regionCode: String): Flow<ProbationDeliveryUnit> = probationDeliveryUnitRepository.findByRegionCode(regionCode)
   suspend fun getProbationDeliveryUnitByCode(code: String): ProbationDeliveryUnitDetails? = probationDeliveryUnitRepository.findById(code)?.let {
-    val region = getRegionService.getRegionByCode(it.regionCode)!!.let { region -> RegionOverview(region.code, region.name) }
-    val teams = getTeamService.findByProbationDeliveryUnitCode(code).map { team ->
+    val region = regionRepository.findById(it.regionCode)!!.let { region -> RegionOverview(region.code, region.name) }
+    val teams = teamRepository.findByPduCode(code).map { team ->
       TeamOverview(team.code, team.name)
     }.toList()
     ProbationDeliveryUnitDetails(it.code, it.name, region, teams)
