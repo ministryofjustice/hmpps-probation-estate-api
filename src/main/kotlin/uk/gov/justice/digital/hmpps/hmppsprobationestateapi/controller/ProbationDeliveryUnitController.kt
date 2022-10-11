@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.ProbationDeliveryUnitDetails
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamOverview
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.exception.EntityNotFoundException
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.service.GetProbationDeliveryUnitService
 
 @RestController
@@ -18,7 +20,7 @@ class ProbationDeliveryUnitController(
   private val getProbationDeliveryUnitService: GetProbationDeliveryUnitService
 ) {
 
-  @Operation(summary = "Retrieve Probation Delivery Unit by Code")
+  @Operation(summary = "Retrieve Probation Delivery Unit teams")
   @ApiResponses(
     value = [
       ApiResponse(responseCode = "200", description = "OK"),
@@ -26,6 +28,16 @@ class ProbationDeliveryUnitController(
     ]
   )
   @GetMapping("/probationDeliveryUnit/{code}/teams")
-  suspend fun getProbationDeliveryUnitByCode(@PathVariable(required = true) code: String): Flow<TeamOverview> =
+  suspend fun getProbationDeliveryUnitTeams(@PathVariable(required = true) code: String): Flow<TeamOverview> =
     getProbationDeliveryUnitService.findTeamsByCode(code)
+
+  @Operation(summary = "Get Probation Delivery Unit by code")
+  @ApiResponses(
+    value = [
+      ApiResponse(responseCode = "200", description = "OK")
+    ]
+  )
+  @GetMapping("/probationDeliveryUnit/{code}")
+  suspend fun getProbationDeliveryUnitByCode(@PathVariable(required = true) code: String): ProbationDeliveryUnitDetails =
+    getProbationDeliveryUnitService.getProbationDeliveryUnitByCode(code) ?: throw EntityNotFoundException("No Probation Delivery Unit found for $code")
 }

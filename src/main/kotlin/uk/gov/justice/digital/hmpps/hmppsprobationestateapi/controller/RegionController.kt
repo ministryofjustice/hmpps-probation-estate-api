@@ -36,5 +36,5 @@ class RegionController(private val getRegionService: GetRegionService) {
   )
   @GetMapping("/region/{code}")
   suspend fun getRegionByCode(@PathVariable(required = true) code: String): RegionDetails =
-    getRegionService.getRegionByCode(code) ?: throw EntityNotFoundException("No region found for $code")
+    getRegionService.getRegionDetailsByCode(code) ?: throw EntityNotFoundException("No region found for $code")
 }

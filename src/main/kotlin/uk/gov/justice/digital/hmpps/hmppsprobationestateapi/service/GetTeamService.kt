@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.springframework.stereotype.Service
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamOverview
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.Team
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.TeamRepository
 
 @Service
@@ -13,4 +14,6 @@ class GetTeamService(private val teamRepository: TeamRepository) {
 
   suspend fun findTeamByCode(teamCode: String): TeamOverview? = teamRepository
     .findById(teamCode)?.let { TeamOverview(it.code, it.name) }
+
+  suspend fun findByProbationDeliveryUnitCode(probationDeliveryUnitCode: String): Flow<Team> = teamRepository.findByPduCode(probationDeliveryUnitCode)
 }
