@@ -31,10 +31,11 @@ class RegionController(private val getRegionService: GetRegionService) {
   @Operation(summary = "Get region by code")
   @ApiResponses(
     value = [
-      ApiResponse(responseCode = "200", description = "OK")
+      ApiResponse(responseCode = "200", description = "OK"),
+      ApiResponse(responseCode = "404", description = "Result Not Found")
     ]
   )
   @GetMapping("/region/{code}")
   suspend fun getRegionByCode(@PathVariable(required = true) code: String): RegionDetails =
-    getRegionService.getRegionByCode(code) ?: throw EntityNotFoundException("No region found for $code")
+    getRegionService.getRegionDetailsByCode(code) ?: throw EntityNotFoundException("No region found for $code")
 }
