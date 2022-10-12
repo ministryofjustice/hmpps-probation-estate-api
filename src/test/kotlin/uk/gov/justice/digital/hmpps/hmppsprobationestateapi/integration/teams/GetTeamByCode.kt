@@ -6,7 +6,7 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.Integrat
 class GetTeamByCode : IntegrationTestBase() {
 
   @Test
-  fun `retrieve team by code`() {
+  fun `retrieve team details by code`() {
     val estateOverview = setupEstate()
     webTestClient.get()
       .uri("/team/${estateOverview.team.code}")
