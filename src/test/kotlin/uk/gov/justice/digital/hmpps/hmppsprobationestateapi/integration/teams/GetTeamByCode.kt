@@ -6,7 +6,7 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.Integrat
 class GetTeamByCode : IntegrationTestBase() {
 
   @Test
-  fun `retrieve team by code`() {
+  fun `retrieve team details by code`() {
     val estateOverview = setupEstate()
     webTestClient.get()
       .uri("/team/${estateOverview.team.code}")
@@ -16,6 +16,8 @@ class GetTeamByCode : IntegrationTestBase() {
       .expectBody()
       .jsonPath("$.code").isEqualTo(estateOverview.team.code)
       .jsonPath("$.name").isEqualTo(estateOverview.team.name)
+      .jsonPath("$.probationDeliveryUnit.code").isEqualTo(estateOverview.probationDeliveryUnit.code)
+      .jsonPath("$.probationDeliveryUnit.name").isEqualTo(estateOverview.probationDeliveryUnit.name)
   }
 
   @Test
