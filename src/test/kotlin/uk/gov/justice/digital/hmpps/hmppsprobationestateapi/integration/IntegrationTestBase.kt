@@ -40,7 +40,7 @@ abstract class IntegrationTestBase {
     regionRepository.deleteAll()
   }
 
-  fun setupTeam(teamCode: String = "TM1"): Team = runBlocking {
+  fun setupEstate(teamCode: String = "TM1"): EstateOverview = runBlocking {
     val region = Region(code = "REGION1", name = "Region Name", new = true)
     val probationDeliveryUnit = ProbationDeliveryUnit(code = "PDU1", name = "PDU Name", regionCode = region.code, new = true)
     val team = Team(code = teamCode, name = "Team Name", pduCode = probationDeliveryUnit.code, new = true)
@@ -51,5 +51,8 @@ abstract class IntegrationTestBase {
       probationDeliveryUnitRepository.save(probationDeliveryUnit)
     }
     teamRepository.save(team)
+    EstateOverview(region, probationDeliveryUnit, team)
   }
 }
+
+data class EstateOverview constructor(val region: Region, val probationDeliveryUnit: ProbationDeliveryUnit, val team: Team)
