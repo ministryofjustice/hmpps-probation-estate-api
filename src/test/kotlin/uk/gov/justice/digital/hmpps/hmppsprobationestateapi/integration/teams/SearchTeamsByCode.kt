@@ -7,29 +7,29 @@ class SearchTeamsByCode : IntegrationTestBase() {
 
   @Test
   fun `retrieve team by code`() {
-    val team = setupTeam()
+    val estateOverview = setupEstate()
     webTestClient.get()
-      .uri("/team/search?codes=${team.code}")
+      .uri("/team/search?codes=${estateOverview.team.code}")
       .exchange()
       .expectStatus()
       .isOk
       .expectBody()
-      .jsonPath("$.[0].code").isEqualTo(team.code)
-      .jsonPath("$.[0].name").isEqualTo(team.name)
+      .jsonPath("$.[0].code").isEqualTo(estateOverview.team.code)
+      .jsonPath("$.[0].name").isEqualTo(estateOverview.team.name)
   }
 
   @Test
   fun `retrieve multiple teams by codes`() {
-    val team = setupTeam()
-    val secondTeam = setupTeam("TM2")
+    val estateOverview = setupEstate()
+    val secondEstateOverview = setupEstate("TM2")
 
     webTestClient.get()
-      .uri("/team/search?codes=${team.code},${secondTeam.code}")
+      .uri("/team/search?codes=${estateOverview.team.code},${secondEstateOverview.team.code}")
       .exchange()
       .expectStatus()
       .isOk
       .expectBody()
-      .jsonPath("$.[?(@.code=='${team.code}')].name").isEqualTo(team.name)
-      .jsonPath("$.[?(@.code=='${secondTeam.code}')].name").isEqualTo(secondTeam.name)
+      .jsonPath("$.[?(@.code=='${estateOverview.team.code}')].name").isEqualTo(estateOverview.team.name)
+      .jsonPath("$.[?(@.code=='${secondEstateOverview.team.code}')].name").isEqualTo(secondEstateOverview.team.name)
   }
 }
