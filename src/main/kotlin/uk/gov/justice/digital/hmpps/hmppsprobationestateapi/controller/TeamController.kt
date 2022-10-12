@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamDetails
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamOverview
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.exception.EntityNotFoundException
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.service.GetTeamService
@@ -38,6 +39,6 @@ class TeamController(
     ]
   )
   @GetMapping("/team/{teamCode}")
-  suspend fun getTeamByCode(@PathVariable teamCode: String): TeamOverview =
-    getTeamService.findTeamByCode(teamCode) ?: throw EntityNotFoundException("No team found for $teamCode")
+  suspend fun getTeamByCode(@PathVariable teamCode: String): TeamDetails =
+    getTeamService.findTeamDetailsByCode(teamCode) ?: throw EntityNotFoundException("No team found for $teamCode")
 }

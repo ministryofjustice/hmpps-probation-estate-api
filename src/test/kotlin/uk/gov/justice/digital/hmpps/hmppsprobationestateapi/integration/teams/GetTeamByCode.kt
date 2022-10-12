@@ -16,6 +16,8 @@ class GetTeamByCode : IntegrationTestBase() {
       .expectBody()
       .jsonPath("$.code").isEqualTo(estateOverview.team.code)
       .jsonPath("$.name").isEqualTo(estateOverview.team.name)
+      .jsonPath("$.probationDeliveryUnit.code").isEqualTo(estateOverview.probationDeliveryUnit.code)
+      .jsonPath("$.probationDeliveryUnit.name").isEqualTo(estateOverview.probationDeliveryUnit.name)
   }
 
   @Test
