@@ -13,8 +13,6 @@ dependencyCheck {
   suppressionFiles.add("suppressions.xml")
 }
 
-val springDocVersion by extra("1.6.11")
-
 dependencies {
 
   implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
@@ -25,8 +23,8 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.4")
 
-  implementation("org.springdoc:springdoc-openapi-webflux-ui:$springDocVersion")
-  implementation("org.springdoc:springdoc-openapi-kotlin:$springDocVersion")
+  implementation("org.springdoc:springdoc-openapi-webflux-ui:1.6.11")
+  implementation("org.springdoc:springdoc-openapi-kotlin:1.6.11")
 
   runtimeOnly("org.flywaydb:flyway-core")
   runtimeOnly("org.postgresql:r2dbc-postgresql:0.9.2.RELEASE")
