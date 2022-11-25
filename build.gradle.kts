@@ -23,7 +23,7 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.4")
 
-  implementation("org.springdoc:springdoc-openapi-webflux-ui:1.6.12")
+  implementation("org.springdoc:springdoc-openapi-webflux-ui:1.6.13")
   implementation("org.springdoc:springdoc-openapi-kotlin:1.6.13")
 
   runtimeOnly("org.flywaydb:flyway-core")
