@@ -73,6 +73,10 @@ workflows:
           context:
             - hmpps-common-vars
             - hmpps-probation-estate-api-preprod
+          filters:
+            branches:
+              only:
+                - main
           requires:
             - validate
             - build_docker
