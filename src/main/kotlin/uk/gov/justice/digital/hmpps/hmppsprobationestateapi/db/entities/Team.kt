@@ -11,7 +11,6 @@ data class Team constructor(
   @Id val code: String,
   val name: String,
   val createdDate: ZonedDateTime = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS),
-  val pduCode: String,
   val lduCode: String,
   @Transient @Value("false") val new: Boolean
 ) : Persistable<String> {

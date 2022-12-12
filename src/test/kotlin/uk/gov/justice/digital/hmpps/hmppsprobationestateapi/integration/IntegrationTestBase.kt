@@ -50,7 +50,7 @@ abstract class IntegrationTestBase {
     val region = Region(code = "REGION1", name = "Region Name", new = true)
     val probationDeliveryUnit = ProbationDeliveryUnit(code = "PDU1", name = "PDU Name", regionCode = region.code, new = true)
     val localDeliveryUnit = LocalDeliveryUnit(code = "LDU1", name = "LDU Name", pduCode = probationDeliveryUnit.code, new = true)
-    val team = Team(code = teamCode, name = "Team Name", pduCode = probationDeliveryUnit.code, lduCode = localDeliveryUnit.code, new = true)
+    val team = Team(code = teamCode, name = "Team Name", lduCode = localDeliveryUnit.code, new = true)
     if (!regionRepository.existsById(region.code)) {
       regionRepository.save(region)
     }
