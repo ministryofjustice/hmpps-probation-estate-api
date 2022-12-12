@@ -27,9 +27,9 @@ class ProbationDeliveryUnitController(
       ApiResponse(responseCode = "404", description = "Result Not Found")
     ]
   )
-  @GetMapping("/probationDeliveryUnit/{code}/teams")
-  suspend fun getProbationDeliveryUnitTeams(@PathVariable(required = true) code: String): Flow<TeamOverview> =
-    getProbationDeliveryUnitService.findTeamsByCode(code)
+  @GetMapping("/probationDeliveryUnit/{pduCode}/teams")
+  suspend fun getProbationDeliveryUnitTeams(@PathVariable(required = true) pduCode: String): Flow<TeamOverview> =
+    getProbationDeliveryUnitService.findTeamsByCode(pduCode)
 
   @Operation(summary = "Get Probation Delivery Unit by code")
   @ApiResponses(
