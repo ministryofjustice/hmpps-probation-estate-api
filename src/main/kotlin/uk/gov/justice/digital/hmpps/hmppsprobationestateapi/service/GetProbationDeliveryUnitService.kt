@@ -23,14 +23,7 @@ class GetProbationDeliveryUnitService(
 ) {
   suspend fun findTeamsByCode(pduCode: String): Flow<TeamOverview> {
     if (probationDeliveryUnitRepository.existsById(pduCode)) {
-      return teamRepository.findByLduCodeIn(
-        localDeliveryUnitRepository
-          .findByPduCode(pduCode)
-          .map { it.code }.toSet()
-      )
-        .map { team ->
-          TeamOverview(team.code, team.name)
-        }
+      return getTeamsByPduCode(pduCode)
     }
     throw EntityNotFoundException("No Probation Delivery Unit found at $pduCode")
   }
@@ -38,14 +31,16 @@ class GetProbationDeliveryUnitService(
   suspend fun getProbationDeliveryUnitDetailsByCode(pduCode: String): ProbationDeliveryUnitDetails? = probationDeliveryUnitRepository.findById(pduCode)
     ?.let { pdu ->
       val region = regionRepository.findById(pdu.regionCode)!!.let { region -> RegionOverview(region.code, region.name) }
-      val teams = teamRepository.findByLduCodeIn(
-        localDeliveryUnitRepository
-          .findByPduCode(pduCode)
-          .map { it.code }.toSet()
-      )
-        .map { team ->
-          TeamOverview(team.code, team.name)
-        }.toList()
+      val teams = getTeamsByPduCode(pduCode).toList()
       ProbationDeliveryUnitDetails(pdu.code, pdu.name, region, teams)
+    }
+
+  private suspend fun getTeamsByPduCode(pduCode: String) = teamRepository.findByLduCodeIn(
+    localDeliveryUnitRepository
+      .findByPduCode(pduCode)
+      .map { it.code }.toSet()
+  )
+    .map { team ->
+      TeamOverview(team.code, team.name)
     }
 }
