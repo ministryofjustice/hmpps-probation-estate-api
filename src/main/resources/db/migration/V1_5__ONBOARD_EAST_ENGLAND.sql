@@ -34,7 +34,7 @@ INSERT INTO team (code, name, ldu_code) VALUES('N56486', 'HFS-Watford SM', 'N56H
 
 INSERT INTO pdu (code, name, region_code) VALUES('N56NOSU', 'Norfolk', 'N56');
 INSERT INTO ldu (code, name, pdu_code) VALUES('N56NSLD', 'Norfolk SM', 'N56NOSU');
-INSERT INTO team (code, name, ldu_code) VALUES('N56NAA', 'NFK-King\'s Lynn SM', 'N56NSLD');
+INSERT INTO team (code, name, ldu_code) VALUES('N56NAA', 'NFK-King''s Lynn SM', 'N56NSLD');
 INSERT INTO team (code, name, ldu_code) VALUES('N56210', 'NFK-Norwich SM', 'N56NSLD');
 
 INSERT INTO pdu (code, name, region_code) VALUES('N56NRTH', 'Northamptonshire', 'N56');
