@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  hmpps: ministryofjustice/hmpps@6.3.0
+  hmpps: ministryofjustice/hmpps@7.0.1
 
 parameters:
   alerts-slack-channel:
@@ -64,7 +64,6 @@ workflows:
             - validate
             - build_docker
             - helm_lint
-          helm_timeout: 5m
       - hmpps/deploy_env:
           name: deploy_preprod
           env: "preprod"
@@ -81,7 +80,6 @@ workflows:
             - validate
             - build_docker
             - helm_lint
-          helm_timeout: 5m
       - request-prod-approval:
           type: approval
           requires:
@@ -99,7 +97,6 @@ workflows:
             - hmpps-probation-estate-api-prod
           requires:
             - request-prod-approval
-          helm_timeout: 5m
 
   security:
     triggers:
