@@ -11,52 +11,6 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.Integrat
 class GetAllEstateByRegionCode : IntegrationTestBase() {
 
   @Test
-  fun `must get all PDUs associated to region and their names`(): Unit = runBlocking {
-    val region = regionRepository.save(Region(code = "RG1", name = "Region 1", new = true))
-    val firstPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU1", name = "PDU 1", regionCode = region.code, new = true))
-    val secondPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU2", name = "PDU 2", regionCode = region.code, new = true))
-
-    webTestClient.get()
-      .uri("/all/region/${region.code}")
-      .exchange()
-      .expectStatus()
-      .isOk
-      .expectBody()
-      .jsonPath("$.${firstPdu.code}.name")
-      .isEqualTo(firstPdu.name)
-      .jsonPath("$.${secondPdu.code}.name")
-      .isEqualTo(secondPdu.name)
-  }
-
-  @Test
-  fun `must get all LDUs associated to region via PDUs and their names`(): Unit = runBlocking {
-    val region = regionRepository.save(Region(code = "RG1", name = "Region 1", new = true))
-    val firstPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU1", name = "PDU 1", regionCode = region.code, new = true))
-    val secondPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU2", name = "PDU 2", regionCode = region.code, new = true))
-
-    val firstPduFirstLdu = localDeliveryUnitRepository.save(LocalDeliveryUnit(code = "LDU1", name = "LDU 1", pduCode = firstPdu.code, new = true))
-    val firstPduSecondLdu = localDeliveryUnitRepository.save(LocalDeliveryUnit(code = "LDU2", name = "LDU 2", pduCode = firstPdu.code, new = true))
-
-    val secondPduFirstLdu = localDeliveryUnitRepository.save(LocalDeliveryUnit(code = "LDU3", name = "LDU 3", pduCode = secondPdu.code, new = true))
-    val secondPduSecondLdu = localDeliveryUnitRepository.save(LocalDeliveryUnit(code = "LDU4", name = "LDU 4", pduCode = secondPdu.code, new = true))
-
-    webTestClient.get()
-      .uri("/all/region/${region.code}")
-      .exchange()
-      .expectStatus()
-      .isOk
-      .expectBody()
-      .jsonPath("$.${firstPdu.code}.ldus.${firstPduFirstLdu.code}.name")
-      .isEqualTo(firstPduFirstLdu.name)
-      .jsonPath("$.${firstPdu.code}.ldus.${firstPduSecondLdu.code}.name")
-      .isEqualTo(firstPduSecondLdu.name)
-      .jsonPath("$.${secondPdu.code}.ldus.${secondPduFirstLdu.code}.name")
-      .isEqualTo(secondPduFirstLdu.name)
-      .jsonPath("$.${secondPdu.code}.ldus.${secondPduSecondLdu.code}.name")
-      .isEqualTo(secondPduSecondLdu.name)
-  }
-
-  @Test
   fun `must get all teams associated to region via LDUs and PDUs and their names`(): Unit = runBlocking {
     val region = regionRepository.save(Region(code = "RG1", name = "Region 1", new = true))
     val firstPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU1", name = "PDU 1", regionCode = region.code, new = true))
@@ -86,5 +40,33 @@ class GetAllEstateByRegionCode : IntegrationTestBase() {
       .isEqualTo(secondPduLduFirstTeam.name)
       .jsonPath("$.${secondPdu.code}.ldus.${secondPduLdu.code}.teams[?(@.code == '${secondPduLduSecondTeam.code}')].name")
       .isEqualTo(secondPduLduSecondTeam.name)
+  }
+
+  @Test
+  fun `must not return when no team exists`(): Unit = runBlocking {
+    val region = regionRepository.save(Region(code = "RG1", name = "Region 1", new = true))
+    val firstPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU1", name = "PDU 1", regionCode = region.code, new = true))
+    val firstPduLdu = localDeliveryUnitRepository.save(LocalDeliveryUnit(code = "LDU1", name = "LDU 1", pduCode = firstPdu.code, new = true))
+    val firstPduFirstLduFirstTeam = teamRepository.save(Team(code = "T1", name = "Team 1", lduCode = firstPduLdu.code, new = true))
+
+    val secondPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU2", name = "PDU 2", regionCode = region.code, new = true))
+    val firstPduSecondLdu = localDeliveryUnitRepository.save(LocalDeliveryUnit(code = "LDU2", name = "LDU 2", pduCode = firstPdu.code, new = true))
+
+    webTestClient.get()
+      .uri("/all/region/${region.code}")
+      .exchange()
+      .expectStatus()
+      .isOk
+      .expectBody()
+      .jsonPath("$.${secondPdu.code}")
+      .doesNotExist()
+      .jsonPath("$.${firstPdu.code}.ldus.${firstPduSecondLdu.code}")
+      .doesNotExist()
+      .jsonPath("$.${firstPdu.code}")
+      .exists()
+      .jsonPath("$.${firstPdu.code}.ldus.${firstPduLdu.code}")
+      .exists()
+      .jsonPath("$.${firstPdu.code}.ldus.${firstPduLdu.code}.teams[?(@.code == '${firstPduFirstLduFirstTeam.code}')]")
+      .exists()
   }
 }

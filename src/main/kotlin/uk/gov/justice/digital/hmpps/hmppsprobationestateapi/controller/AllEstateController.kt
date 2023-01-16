@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.AllProbationDeliveryUnit
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.exception.EntityNotFoundException
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.service.AllEstateService
 
 @RestController
@@ -25,5 +24,5 @@ class AllEstateController(private val allEstateService: AllEstateService) {
   )
   @GetMapping("/all/region/{regionCode}")
   suspend fun getEstateByRegionCode(@PathVariable(required = true) regionCode: String): Map<String, AllProbationDeliveryUnit> =
-    allEstateService.getEstateByRegionCode(regionCode) ?: throw EntityNotFoundException("No region found for $regionCode")
+    allEstateService.getEstateByRegionCode(regionCode)
 }

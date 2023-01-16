@@ -10,7 +10,7 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.AllE
 @Service
 class AllEstateService(private val allEstateRegionRepository: AllEstateRegionRepository) {
 
-  suspend fun getEstateByRegionCode(code: String): Map<String, AllProbationDeliveryUnit>? = allEstateRegionRepository.findAllEstateByRegionCode(code)
+  suspend fun getEstateByRegionCode(code: String): Map<String, AllProbationDeliveryUnit> = allEstateRegionRepository.findAllEstateByRegionCode(code)
     .toList()
     .groupBy { it.pduCode }
     .mapValues { pdus ->
