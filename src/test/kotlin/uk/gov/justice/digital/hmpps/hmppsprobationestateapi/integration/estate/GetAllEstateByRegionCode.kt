@@ -32,6 +32,10 @@ class GetAllEstateByRegionCode : IntegrationTestBase() {
       .expectStatus()
       .isOk
       .expectBody()
+      .jsonPath("$.${firstPdu.code}.name")
+      .isEqualTo(firstPdu.name)
+      .jsonPath("$.${firstPdu.code}.ldus.${firstPduLdu.code}.name")
+      .isEqualTo(firstPduLdu.name)
       .jsonPath("$.${firstPdu.code}.ldus.${firstPduLdu.code}.teams[?(@.code == '${firstPduLduFirstTeam.code}')].name")
       .isEqualTo(firstPduLduFirstTeam.name)
       .jsonPath("$.${firstPdu.code}.ldus.${firstPduLdu.code}.teams[?(@.code == '${firstPduLduSecondTeam.code}')].name")
