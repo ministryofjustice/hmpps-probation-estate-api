@@ -27,7 +27,7 @@ dependencies {
 
   runtimeOnly("org.flywaydb:flyway-core")
   runtimeOnly("org.postgresql:r2dbc-postgresql:1.0.0.RELEASE")
-  runtimeOnly("org.postgresql:postgresql:42.5.3")
+  runtimeOnly("org.postgresql:postgresql:42.5.4")
 
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
 }
