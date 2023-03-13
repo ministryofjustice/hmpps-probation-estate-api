@@ -16,6 +16,7 @@ class DefaultAllEstateRegionRepository(private val databaseClient: DatabaseClien
         "join ldu l on l.pdu_code=p.code " +
         "join team t on t.ldu_code=l.code " +
         "where r.code=:regionCode " +
+        "and r.soft_deleted = false " +
         "and p.soft_deleted = false " +
         "and l.soft_deleted = false " +
         "and t.soft_deleted = false"
