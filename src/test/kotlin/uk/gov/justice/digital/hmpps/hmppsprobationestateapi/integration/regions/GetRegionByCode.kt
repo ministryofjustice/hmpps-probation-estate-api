@@ -13,6 +13,7 @@ class GetRegionByCode : IntegrationTestBase() {
     val region = regionRepository.save(Region(code = "RG1", name = "Region 1", new = true))
     val firstPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU1", name = "PDU 1", regionCode = region.code, new = true))
     val secondPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU2", name = "PDU 2", regionCode = region.code, new = true))
+    val deletedPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "DELETEDPDU", name = "DELETED PDU", regionCode = region.code, softDeleted = true, new = true))
 
     webTestClient.get()
       .uri("/region/${region.code}")
@@ -24,6 +25,7 @@ class GetRegionByCode : IntegrationTestBase() {
       .jsonPath("$.name").isEqualTo(region.name)
       .jsonPath("$.probationDeliveryUnits.[?(@.code=='${firstPdu.code}')].name").isEqualTo(firstPdu.name)
       .jsonPath("$.probationDeliveryUnits.[?(@.code=='${secondPdu.code}')].name").isEqualTo(secondPdu.name)
+      .jsonPath("$.probationDeliveryUnits.[?(@.code=='${deletedPdu.code}')]").doesNotExist()
   }
 
   @Test

@@ -1,6 +1,5 @@
 package uk.gov.justice.digital.hmpps.hmppsprobationestateapi.service
 
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.flow.toSet
@@ -12,7 +11,6 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.Loca
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.ProbationDeliveryUnitRepository
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.RegionRepository
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.TeamRepository
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.exception.EntityNotFoundException
 
 @Service
 class GetProbationDeliveryUnitService(
@@ -21,12 +19,6 @@ class GetProbationDeliveryUnitService(
   private val regionRepository: RegionRepository,
   private val teamRepository: TeamRepository
 ) {
-  suspend fun findTeamsByCode(pduCode: String): Flow<TeamOverview> {
-    if (probationDeliveryUnitRepository.existsById(pduCode)) {
-      return getTeamsByPduCode(pduCode)
-    }
-    throw EntityNotFoundException("No Probation Delivery Unit found at $pduCode")
-  }
 
   suspend fun getProbationDeliveryUnitDetailsByCode(pduCode: String): ProbationDeliveryUnitDetails? = probationDeliveryUnitRepository.findById(pduCode)
     ?.let { pdu ->
@@ -35,7 +27,7 @@ class GetProbationDeliveryUnitService(
       ProbationDeliveryUnitDetails(pdu.code, pdu.name, region, teams)
     }
 
-  private suspend fun getTeamsByPduCode(pduCode: String) = teamRepository.findByLduCodeIn(
+  private suspend fun getTeamsByPduCode(pduCode: String) = teamRepository.findByLduCodeInAndSoftDeletedFalse(
     localDeliveryUnitRepository
       .findByPduCode(pduCode)
       .map { it.code }.toSet()

@@ -12,11 +12,11 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.Regi
 
 @Service
 class GetRegionService(private val regionRepository: RegionRepository, private val probationDeliveryUnitRepository: ProbationDeliveryUnitRepository) {
-  suspend fun getAll(): Flow<RegionOverview> = regionRepository.findAll()
+  suspend fun getAll(): Flow<RegionOverview> = regionRepository.findBySoftDeletedFalse()
     .map { RegionOverview(it.code, it.name) }
 
   suspend fun getRegionDetailsByCode(code: String): RegionDetails? = regionRepository.findById(code)?.let {
-    val pdus = probationDeliveryUnitRepository.findByRegionCode(code).map { pdu -> ProbationDeliveryUnitOverview(pdu.code, pdu.name) }.toList()
+    val pdus = probationDeliveryUnitRepository.findByRegionCodeAndSoftDeletedFalse(code).map { pdu -> ProbationDeliveryUnitOverview(pdu.code, pdu.name) }.toList()
     RegionDetails(it.code, it.name, pdus)
   }
 }

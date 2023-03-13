@@ -12,6 +12,7 @@ class GetProbationDeliveryUnitDetails : IntegrationTestBase() {
     val secondTeamCode = "TM2"
     val firstTeamEstate = setupEstate(firstTeamCode)
     val secondTeamEstate = setupEstate(secondTeamCode)
+    val deletedTeamEstate = setupEstate("DELETEDTEAM", true)
 
     webTestClient.get()
       .uri("/probationDeliveryUnit/${firstTeamEstate.probationDeliveryUnit.code}")
@@ -25,6 +26,7 @@ class GetProbationDeliveryUnitDetails : IntegrationTestBase() {
       .jsonPath("$.region.name").isEqualTo(firstTeamEstate.region.name)
       .jsonPath("$.teams.[?(@.code=='${firstTeamEstate.team.code}')].name").isEqualTo(firstTeamEstate.team.name)
       .jsonPath("$.teams.[?(@.code=='${secondTeamEstate.team.code}')].name").isEqualTo(secondTeamEstate.team.name)
+      .jsonPath("$.teams.[?(@.code=='${deletedTeamEstate.team.code}')]").doesNotExist()
   }
 
   @Test
