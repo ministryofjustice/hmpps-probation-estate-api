@@ -15,7 +15,11 @@ class DefaultAllEstateRegionRepository(private val databaseClient: DatabaseClien
         "join pdu p on p.region_code = r.code " +
         "join ldu l on l.pdu_code=p.code " +
         "join team t on t.ldu_code=l.code " +
-        "where r.code=:regionCode"
+        "where r.code=:regionCode " +
+        "and r.soft_deleted = false " +
+        "and p.soft_deleted = false " +
+        "and l.soft_deleted = false " +
+        "and t.soft_deleted = false"
     )
     .bind("regionCode", regionCode)
     .map { row ->

@@ -12,7 +12,7 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.Team
 
 @Service
 class GetTeamService(private val teamRepository: TeamRepository, private val probationDeliveryUnitRepository: ProbationDeliveryUnitRepository, private val localDeliveryUnitRepository: LocalDeliveryUnitRepository) {
-  fun findTeamsByCode(codes: List<String>): Flow<TeamOverview> = teamRepository.findAllById(codes)
+  suspend fun findTeamsByCode(codes: List<String>): Flow<TeamOverview> = teamRepository.findByCodeInAndSoftDeletedFalse(codes)
     .map { TeamOverview(it.code, it.name) }
 
   suspend fun findTeamDetailsByCode(teamCode: String): TeamDetails? = teamRepository

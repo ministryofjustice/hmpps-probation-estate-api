@@ -22,14 +22,16 @@ class SearchTeamsByCode : IntegrationTestBase() {
   fun `retrieve multiple teams by codes`() {
     val estateOverview = setupEstate()
     val secondEstateOverview = setupEstate("TM2")
+    val deletedEstateOverview = setupEstate("DELETEDTEAM", true)
 
     webTestClient.get()
-      .uri("/team/search?codes=${estateOverview.team.code},${secondEstateOverview.team.code}")
+      .uri("/team/search?codes=${estateOverview.team.code},${secondEstateOverview.team.code},${deletedEstateOverview.team.code}")
       .exchange()
       .expectStatus()
       .isOk
       .expectBody()
       .jsonPath("$.[?(@.code=='${estateOverview.team.code}')].name").isEqualTo(estateOverview.team.name)
       .jsonPath("$.[?(@.code=='${secondEstateOverview.team.code}')].name").isEqualTo(secondEstateOverview.team.name)
+      .jsonPath("$.[?(@.code=='${deletedEstateOverview.team.code}')]").doesNotExist()
   }
 }

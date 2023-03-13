@@ -14,7 +14,8 @@ class GetAllRegions : IntegrationTestBase() {
       listOf(
         Region(code = "REGION1", name = "First Region", new = true),
         Region(code = "REGION2", name = "Second Region", new = true),
-        Region(code = "REGION3", name = "Third Region", new = true)
+        Region(code = "REGION3", name = "Third Region", new = true),
+        Region(code = "DELETEDREGION", name = "Deleted Region", softDeleted = true, new = true)
       )
     ).toList()
 
@@ -27,5 +28,6 @@ class GetAllRegions : IntegrationTestBase() {
       .jsonPath("$.[?(@.code=='${regions[0].code}')].name").isEqualTo(regions[0].name)
       .jsonPath("$.[?(@.code=='${regions[1].code}')].name").isEqualTo(regions[1].name)
       .jsonPath("$.[?(@.code=='${regions[2].code}')].name").isEqualTo(regions[2].name)
+      .jsonPath("$.[?(@.code=='${regions[3].code}')]").doesNotExist()
   }
 }
