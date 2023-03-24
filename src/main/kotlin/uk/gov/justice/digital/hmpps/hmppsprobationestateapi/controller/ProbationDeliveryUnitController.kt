@@ -15,15 +15,15 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.service.GetProbation
 @RestController
 @RequestMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
 class ProbationDeliveryUnitController(
-  private val getProbationDeliveryUnitService: GetProbationDeliveryUnitService
+  private val getProbationDeliveryUnitService: GetProbationDeliveryUnitService,
 ) {
 
   @Operation(summary = "Get Probation Delivery Unit by code")
   @ApiResponses(
     value = [
       ApiResponse(responseCode = "200", description = "OK"),
-      ApiResponse(responseCode = "404", description = "Result Not Found")
-    ]
+      ApiResponse(responseCode = "404", description = "Result Not Found"),
+    ],
   )
   @GetMapping("/probationDeliveryUnit/{code}")
   suspend fun getProbationDeliveryUnitByCode(@PathVariable(required = true) code: String): ProbationDeliveryUnitDetails =

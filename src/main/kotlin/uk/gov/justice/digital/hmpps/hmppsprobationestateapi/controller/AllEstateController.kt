@@ -19,8 +19,8 @@ class AllEstateController(private val allEstateService: AllEstateService) {
   @ApiResponses(
     value = [
       ApiResponse(responseCode = "200", description = "OK"),
-      ApiResponse(responseCode = "404", description = "Result Not Found")
-    ]
+      ApiResponse(responseCode = "404", description = "Result Not Found"),
+    ],
   )
   @GetMapping("/all/region/{regionCode}")
   suspend fun getEstateByRegionCode(@PathVariable(required = true) regionCode: String): Map<String, AllProbationDeliveryUnit> =

@@ -5,5 +5,5 @@ import com.fasterxml.jackson.annotation.JsonCreator
 data class TeamDetails @JsonCreator constructor(
   val code: String,
   val name: String,
-  val probationDeliveryUnit: ProbationDeliveryUnitOverview
+  val probationDeliveryUnit: ProbationDeliveryUnitOverview,
 )

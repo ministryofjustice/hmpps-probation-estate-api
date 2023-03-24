@@ -13,7 +13,9 @@ data class Team constructor(
   val createdDate: ZonedDateTime = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS),
   val lduCode: String,
   val softDeleted: Boolean = false,
-  @Transient @Value("false") val new: Boolean
+  @Transient
+  @Value("false")
+  val new: Boolean,
 ) : Persistable<String> {
   override fun getId(): String? = code
 

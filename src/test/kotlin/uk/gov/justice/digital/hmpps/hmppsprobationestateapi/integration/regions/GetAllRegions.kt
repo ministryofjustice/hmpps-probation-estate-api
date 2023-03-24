@@ -15,8 +15,8 @@ class GetAllRegions : IntegrationTestBase() {
         Region(code = "REGION1", name = "First Region", new = true),
         Region(code = "REGION2", name = "Second Region", new = true),
         Region(code = "REGION3", name = "Third Region", new = true),
-        Region(code = "DELETEDREGION", name = "Deleted Region", softDeleted = true, new = true)
-      )
+        Region(code = "DELETEDREGION", name = "Deleted Region", softDeleted = true, new = true),
+      ),
     ).toList()
 
     webTestClient.get()

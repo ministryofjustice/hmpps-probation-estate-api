@@ -6,5 +6,5 @@ data class ProbationDeliveryUnitDetails @JsonCreator constructor(
   val code: String,
   val name: String,
   val region: RegionOverview,
-  val teams: List<TeamOverview>
+  val teams: List<TeamOverview>,
 )
