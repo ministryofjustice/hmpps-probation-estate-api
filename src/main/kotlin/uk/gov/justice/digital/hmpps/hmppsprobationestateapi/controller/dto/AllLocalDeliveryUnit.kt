@@ -4,5 +4,5 @@ import com.fasterxml.jackson.annotation.JsonCreator
 
 data class AllLocalDeliveryUnit @JsonCreator constructor(
   val name: String,
-  val teams: List<TeamOverview>
+  val teams: List<TeamOverview>,
 )

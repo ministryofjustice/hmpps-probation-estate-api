@@ -17,7 +17,7 @@ class AllEstateService(private val allEstateRegionRepository: AllEstateRegionRep
       AllProbationDeliveryUnit(
         pdus.value[0].pduName,
         pdus.value.groupBy { it.lduCode }
-          .mapValues { ldu -> AllLocalDeliveryUnit(ldu.value[0].lduName, ldu.value.map { TeamOverview(it.teamCode, it.teamName) }) }
+          .mapValues { ldu -> AllLocalDeliveryUnit(ldu.value[0].lduName, ldu.value.map { TeamOverview(it.teamCode, it.teamName) }) },
       )
     }
 }

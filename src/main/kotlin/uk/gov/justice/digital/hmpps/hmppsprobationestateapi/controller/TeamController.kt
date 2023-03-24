@@ -18,14 +18,14 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.service.GetTeamServi
 @RestController
 @RequestMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
 class TeamController(
-  private val getTeamService: GetTeamService
+  private val getTeamService: GetTeamService,
 ) {
 
   @Operation(summary = "Search teams by code")
   @ApiResponses(
     value = [
-      ApiResponse(responseCode = "200", description = "OK")
-    ]
+      ApiResponse(responseCode = "200", description = "OK"),
+    ],
   )
   @GetMapping("/team/search")
   suspend fun getTeamsByCode(@RequestParam(required = true) codes: List<String>): Flow<TeamOverview> =
@@ -35,8 +35,8 @@ class TeamController(
   @ApiResponses(
     value = [
       ApiResponse(responseCode = "200", description = "OK"),
-      ApiResponse(responseCode = "404", description = "NOT FOUND")
-    ]
+      ApiResponse(responseCode = "404", description = "NOT FOUND"),
+    ],
   )
   @GetMapping("/team/{teamCode}")
   suspend fun getTeamByCode(@PathVariable teamCode: String): TeamDetails =

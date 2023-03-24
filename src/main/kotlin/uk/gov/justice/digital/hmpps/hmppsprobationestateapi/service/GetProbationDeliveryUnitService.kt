@@ -17,7 +17,7 @@ class GetProbationDeliveryUnitService(
   private val probationDeliveryUnitRepository: ProbationDeliveryUnitRepository,
   private val localDeliveryUnitRepository: LocalDeliveryUnitRepository,
   private val regionRepository: RegionRepository,
-  private val teamRepository: TeamRepository
+  private val teamRepository: TeamRepository,
 ) {
 
   suspend fun getProbationDeliveryUnitDetailsByCode(pduCode: String): ProbationDeliveryUnitDetails? = probationDeliveryUnitRepository.findById(pduCode)
@@ -30,7 +30,7 @@ class GetProbationDeliveryUnitService(
   private suspend fun getTeamsByPduCode(pduCode: String) = teamRepository.findByLduCodeInAndSoftDeletedFalse(
     localDeliveryUnitRepository
       .findByPduCode(pduCode)
-      .map { it.code }.toSet()
+      .map { it.code }.toSet(),
   )
     .map { team ->
       TeamOverview(team.code, team.name)

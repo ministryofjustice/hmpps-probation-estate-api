@@ -4,5 +4,5 @@ import com.fasterxml.jackson.annotation.JsonCreator
 
 data class RegionOverview @JsonCreator constructor(
   val code: String,
-  val name: String
+  val name: String,
 )

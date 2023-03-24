@@ -12,7 +12,9 @@ data class Region constructor(
   val name: String,
   val createdDate: ZonedDateTime = ZonedDateTime.now().truncatedTo(ChronoUnit.SECONDS),
   val softDeleted: Boolean = false,
-  @Transient @Value("false") val new: Boolean
+  @Transient
+  @Value("false")
+  val new: Boolean,
 ) : Persistable<String> {
   override fun getId(): String? = code
 

@@ -19,7 +19,7 @@ class DefaultAllEstateRegionRepository(private val databaseClient: DatabaseClien
         "and r.soft_deleted = false " +
         "and p.soft_deleted = false " +
         "and l.soft_deleted = false " +
-        "and t.soft_deleted = false"
+        "and t.soft_deleted = false",
     )
     .bind("regionCode", regionCode)
     .map { row ->
@@ -29,7 +29,7 @@ class DefaultAllEstateRegionRepository(private val databaseClient: DatabaseClien
         row.get("lduCode", String::class.java),
         row.get("lduName", String::class.java),
         row.get("teamCode", String::class.java),
-        row.get("teamName", String::class.java)
+        row.get("teamName", String::class.java),
       )
     }
     .all().asFlow()
