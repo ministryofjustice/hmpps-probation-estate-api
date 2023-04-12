@@ -1,0 +1,1 @@
+update team set soft_deleted = true where code = 'N56BBO';
