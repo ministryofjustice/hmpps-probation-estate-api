@@ -20,7 +20,7 @@ dependencies {
 
   implementation("org.springframework.boot:spring-boot-starter-webflux")
 
-  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+  implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.4")
 
   implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.1.0")
