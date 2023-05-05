@@ -6,3 +6,6 @@ generic-service:
 
   env:
     APPLICATIONINSIGHTS_CONFIGURATION_FILE: applicationinsights.dev.json
+
+  scheduledDowntime:
+    enabled: true
