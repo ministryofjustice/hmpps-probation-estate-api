@@ -29,7 +29,7 @@ dependencies {
   runtimeOnly("org.postgresql:r2dbc-postgresql:1.0.1.RELEASE")
   runtimeOnly("org.postgresql:postgresql:42.6.0")
 
-  testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+  testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.0")
 }
 
 java {
