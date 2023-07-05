@@ -9,3 +9,4 @@ spring:
       sslRootCert:
   flyway:
     baseline-on-migrate: true
+    
