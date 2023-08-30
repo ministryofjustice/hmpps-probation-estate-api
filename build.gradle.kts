@@ -23,7 +23,7 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.7.1")
 
-  implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.1.0")
+  implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.2.0")
 
   runtimeOnly("org.flywaydb:flyway-core")
   runtimeOnly("org.postgresql:r2dbc-postgresql:1.0.1.RELEASE")
