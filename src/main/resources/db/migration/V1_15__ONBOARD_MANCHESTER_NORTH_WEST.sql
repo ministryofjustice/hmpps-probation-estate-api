@@ -69,7 +69,7 @@ INSERT INTO ldu (code, name, pdu_code) VALUES ('N50MMAP', 'MAPPA', 'N50PPC');
 INSERT INTO team (code, name, ldu_code) VALUES ('N50MTR', 'MAPPT-MAPPA and Public Protection Team', 'N50MMAP');
 
 
-INSERT INTO region (code, name) VALUES('N50', 'North West');
+INSERT INTO region (code, name) VALUES('N51', 'North West');
 INSERT INTO pdu (code, name, region_code) VALUES ('N51BLDA', 'Blackburn and Darwen', 'N51');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N51BDRV', 'Blackburn and Darwen', 'N51BLDA');
 INSERT INTO team (code, name, ldu_code) VALUES ('N51BL1', 'Blackburn 1', 'N51BDRV');
