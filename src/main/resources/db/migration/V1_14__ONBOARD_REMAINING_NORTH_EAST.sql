@@ -17,20 +17,6 @@ INSERT INTO team (code, name, ldu_code) VALUES ('N54NEA', 'South Durham 2', 'N54
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N54NOD', 'Non OM County Durham and Darlington', 'N54DUR');
 INSERT INTO team (code, name, ldu_code) VALUES ('N54AA5', 'Awaiting allocation County Durham Darlington', 'N54NOD');
 
-INSERT INTO pdu (code, name, region_code) VALUES ('N54SOT', 'Gateshead and South Tyneside', 'N54');
-INSERT INTO ldu (code, name, pdu_code) VALUES ('N54GHD', 'Gateshead', 'N54SOT');
-INSERT INTO team (code, name, ldu_code) VALUES ('N54NGH', 'Gateshead 1', 'N54GHD');
-INSERT INTO team (code, name, ldu_code) VALUES ('N54NG2', 'Gateshead 2', 'N54GHD');
-INSERT INTO team (code, name, ldu_code) VALUES ('N54NAF', 'Gateshead 3', 'N54GHD');
-INSERT INTO team (code, name, ldu_code) VALUES ('N54PQ2', 'Gateshead and South Tyneside PQIP Team', 'N54GHD');
-
-INSERT INTO ldu (code, name, pdu_code) VALUES ('N54STS', 'South Tyneside', 'N54SOT');
-INSERT INTO team (code, name, ldu_code) VALUES ('N54NST', 'South Tyneside 1', 'N54STS');
-INSERT INTO team (code, name, ldu_code) VALUES ('N54NAT', 'South Tyneside 2', 'N54STS');
-
-INSERT INTO ldu (code, name, pdu_code) VALUES ('N54NST', 'Non OM Gateshead and South Tyneside', 'N54SOT');
-INSERT INTO team (code, name, ldu_code) VALUES ('N54A11', 'Awaiting allocation Gateshead and S Tyneside', 'N54NST');
-
 INSERT INTO pdu (code, name, region_code) VALUES ('N54NUTY', 'Newcastle Upon Tyne', 'N54');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N54NEW', 'Newcastle Upon Tyne', 'N54NUTY');
 INSERT INTO team (code, name, ldu_code) VALUES ('N54NAD', 'Newcastle 1', 'N54NEW');
