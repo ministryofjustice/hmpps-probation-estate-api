@@ -5,7 +5,7 @@ INSERT INTO team (code, name, ldu_code) VALUES ('N54DUC', 'North Durham 1', 'N54
 INSERT INTO team (code, name, ldu_code) VALUES ('N54DAG', 'North Durham 2', 'N54NOR');
 INSERT INTO team (code, name, ldu_code) VALUES ('N54ND3', 'North Durham 3', 'N54NOR');
 INSERT INTO team (code, name, ldu_code) VALUES ('N54PET', 'Peterlee 1', 'N54NOR');
-INSERT INTO team (code, name, ldu_code) VALUES ('N54NOR', 'Peterlee 2', 'N54NOR');
+INSERT INTO team (code, name, ldu_code) VALUES ('N54DAO', 'Peterlee 2', 'N54NOR');
 INSERT INTO team (code, name, ldu_code) VALUES ('N54DUW', 'South Durham 1', 'N54NOR');
 INSERT INTO team (code, name, ldu_code) VALUES ('N54DAI', 'Durham & Darlington IOM', 'N54NOR');
 
