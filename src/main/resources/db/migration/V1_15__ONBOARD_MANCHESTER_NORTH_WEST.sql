@@ -1,6 +1,9 @@
 INSERT INTO region (code, name) VALUES('N50', 'Greater Manchester');
 INSERT INTO pdu (code, name, region_code) VALUES ('N50BOLT', 'Bolton', 'N50');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N50BOL', 'Bolton', 'N50BOLT');
+INSERT INTO team (code, name, ldu_code) VALUES ('N50CAM', 'GM Bolton 1', 'N50BOL');
+INSERT INTO team (code, name, ldu_code) VALUES ('N50BO2', 'GM Bolton 2', 'N50BOL');
+INSERT INTO team (code, name, ldu_code) VALUES ('N50BAX', 'GM Bolton 4', 'N50BOL');
 
 INSERT INTO pdu (code, name, region_code) VALUES ('N50ROBO', 'Bury and Rochdale', 'N50');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N50BUR', 'Bury', 'N50ROBO');
@@ -69,7 +72,7 @@ INSERT INTO ldu (code, name, pdu_code) VALUES ('N50MMAP', 'MAPPA', 'N50PPC');
 INSERT INTO team (code, name, ldu_code) VALUES ('N50MTR', 'MAPPT-MAPPA and Public Protection Team', 'N50MMAP');
 
 
-INSERT INTO region (code, name) VALUES('N51', 'North West');
+INSERT INTO region (code, name) VALUES('N51', 'North West Region');
 INSERT INTO pdu (code, name, region_code) VALUES ('N51BLDA', 'Blackburn and Darwen', 'N51');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N51BDRV', 'Blackburn and Darwen', 'N51BLDA');
 INSERT INTO team (code, name, ldu_code) VALUES ('N51BL1', 'Blackburn 1', 'N51BDRV');
