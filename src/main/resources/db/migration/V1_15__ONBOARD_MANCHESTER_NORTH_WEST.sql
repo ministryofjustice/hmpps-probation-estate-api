@@ -1,6 +1,9 @@
 INSERT INTO region (code, name) VALUES('N50', 'Greater Manchester');
 INSERT INTO pdu (code, name, region_code) VALUES ('N50BOLT', 'Bolton', 'N50');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N50BOL', 'Bolton', 'N50BOLT');
+INSERT INTO team (code, name, ldu_code) VALUES ('N50CAM', 'GM Bolton 1', 'N50BOL');
+INSERT INTO team (code, name, ldu_code) VALUES ('N50BO2', 'GM Bolton 2', 'N50BOL');
+INSERT INTO team (code, name, ldu_code) VALUES ('N50BAX', 'GM Bolton 4', 'N50BOL');
 
 INSERT INTO pdu (code, name, region_code) VALUES ('N50ROBO', 'Bury and Rochdale', 'N50');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N50BUR', 'Bury', 'N50ROBO');
