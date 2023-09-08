@@ -7,4 +7,8 @@ spring:
     properties:
       sslMode: DISABLE
       sslRootCert:
-    
+
+management:
+  endpoint:
+    flyway:
+      enabled: false
