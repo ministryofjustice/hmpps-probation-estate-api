@@ -7,5 +7,3 @@ spring:
     properties:
       sslMode: DISABLE
       sslRootCert:
-  flyway:
-    baseline-on-migrate: false
