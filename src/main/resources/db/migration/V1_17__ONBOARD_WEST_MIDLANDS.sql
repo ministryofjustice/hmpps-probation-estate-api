@@ -64,7 +64,7 @@ INSERT INTO ldu (code, name, pdu_code) VALUES ('N52HERL', 'Herefordshire', 'N52W
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N52SHRL', 'Shropshire', 'N52WEME');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N52TELL', 'Telford', 'N52WEME');
 INSERT INTO team (code, name, ldu_code) VALUES ('N52HER', 'Hereford', 'N52HERL');
-INSERT INTO team (code, name, ldu_code) VALUES ('N52DPQ', 'Hereford PQIP', 'N52HERL');
+INSERT INTO team (code, name, ldu_code) VALUES ('N52HPQ', 'Hereford PQIP', 'N52HERL');
 INSERT INTO team (code, name, ldu_code) VALUES ('N52SHR', 'Shrewsbury', 'N52SHRL');
 INSERT INTO team (code, name, ldu_code) VALUES ('N52SPP', 'Shrewsbury PQIP', 'N52SHRL');
 INSERT INTO team (code, name, ldu_code) VALUES ('N52TEL', 'Telford', 'N52TELL');
