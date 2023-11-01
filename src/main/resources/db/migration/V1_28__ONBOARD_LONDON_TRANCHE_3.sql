@@ -121,9 +121,9 @@ INSERT INTO ldu (code, name, pdu_code) VALUES ('LDNNLAM', 'Lambeth LDU', 'LDNLAW
 INSERT INTO team (code, name, ldu_code) VALUES ('N07LAU', 'Awaiting Allocation Lambeth', 'LDNNLAM');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07578', 'LAM 1', 'LDNNLAM');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07579', 'LAM 2', 'LDNNLAM');
-INSERT INTO team (code, name, ldu_code) VALUES ('N07V13', 'LAM 3', 'LDNNLAM');
-INSERT INTO team (code, name, ldu_code) VALUES ('N07HOU', 'LAM 4', 'LDNNLAM');
-INSERT INTO team (code, name, ldu_code) VALUES ('N07572', 'LAM 5', 'LDNNLAM');
+INSERT INTO team (code, name, ldu_code) VALUES ('N07580', 'LAM 3', 'LDNNLAM');
+INSERT INTO team (code, name, ldu_code) VALUES ('N07LDD', 'LAM 4', 'LDNNLAM');
+INSERT INTO team (code, name, ldu_code) VALUES ('N07LDF', 'LAM 5', 'LDNNLAM');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07V15', 'LAM PQiP', 'LDNNLAM');
 
 INSERT INTO pdu (code, name, region_code) VALUES ('N07LEBR', 'Lewisham and Bromley', 'N07');
