@@ -176,10 +176,11 @@ INSERT INTO team (code, name, ldu_code) VALUES ('N07LEC', 'SOU 5', 'LDNNSOU');
 
 INSERT INTO pdu (code, name, region_code) VALUES ('N07TOWH', 'Tower Hamlets', 'N07');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('LDNNTWR', 'Tower Hamlets LDU', 'N07TOWH');
+INSERT INTO team (code, name, ldu_code) VALUES ('N07TOU', 'Awaiting Allocation Tower Hamlets', 'LDNNTWR');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07550', 'TWR 1', 'LDNNTWR');
-INSERT INTO team (code, name, ldu_code) VALUES ('N07588', 'TWR 2', 'LDNNTWR');
-INSERT INTO team (code, name, ldu_code) VALUES ('N07589', 'TWR 3', 'LDNNTWR');
-INSERT INTO team (code, name, ldu_code) VALUES ('N07611', 'TWR 4', 'LDNNTWR');
+INSERT INTO team (code, name, ldu_code) VALUES ('N07551', 'TWR 2', 'LDNNTWR');
+INSERT INTO team (code, name, ldu_code) VALUES ('N07LEH', 'TWR 3', 'LDNNTWR');
+INSERT INTO team (code, name, ldu_code) VALUES ('N07LEI', 'TWR 4', 'LDNNTWR');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07V20', 'TWR 5 PQiP', 'LDNNTWR');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07TH6', 'TWR 6', 'LDNNTWR');
 
