@@ -80,7 +80,7 @@ INSERT INTO team (code, name, ldu_code) VALUES ('N07GRU', 'Awaiting Allocation G
 INSERT INTO team (code, name, ldu_code) VALUES ('N07518', 'GRE 1', 'LDNNGRE');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07519', 'GRE 2', 'LDNNGRE');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07LCI', 'GRE 3', 'LDNNGRE');
-INSERT INTO team (code, name, ldu_code) VALUES ('N07V08', 'GRE PQiP', 'LDNNGRE')
+INSERT INTO team (code, name, ldu_code) VALUES ('N07V08', 'GRE PQiP', 'LDNNGRE');
 
 INSERT INTO pdu (code, name, region_code) VALUES ('LDNNHTH', 'Hackney and City', 'N07');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('LDNNHAC', 'Hackney LDU', 'LDNNHTH');
