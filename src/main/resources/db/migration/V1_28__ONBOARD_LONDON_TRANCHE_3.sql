@@ -99,7 +99,7 @@ INSERT INTO team (code, name, ldu_code) VALUES ('N07LBO', 'BAR 2', 'LDNNBAR');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07V11', 'BAR PQiP', 'LDNNBAR');
 
 INSERT INTO ldu (code, name, pdu_code) VALUES ('LDNNHRW', 'Harrow LDU', 'LDNBEB');
-INSERT INTO team (code, name, ldu_code) VALUES ('N07GRU', 'Awaiting Allocation Greenwich', 'LDNNHRW');
+INSERT INTO team (code, name, ldu_code) VALUES ('N07EHH', 'Awaiting Allocation Harrow', 'LDNNHRW');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07540', 'HRW 1', 'LDNNHRW');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07LCH', 'HRW 2', 'LDNNHRW');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07V12', 'HRW PQiP', 'LDNNHRW');
