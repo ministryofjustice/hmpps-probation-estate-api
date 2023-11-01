@@ -66,5 +66,3 @@ INSERT INTO team (code, name, ldu_code) VALUES ('N53MAS', 'Mansfield and Ashfiel
 INSERT INTO team (code, name, ldu_code) VALUES ('N53NNT', 'North Nottinghamshire', 'N53NTSL');
 INSERT INTO team (code, name, ldu_code) VALUES ('N53PQ1', 'Nottinghamshire PQIP', 'N53NTSL');
 INSERT INTO team (code, name, ldu_code) VALUES ('N53NOS', 'Nottinghamshire South', 'N53NTSL');
-
-
