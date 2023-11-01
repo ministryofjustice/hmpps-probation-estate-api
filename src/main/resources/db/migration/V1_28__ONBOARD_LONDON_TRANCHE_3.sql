@@ -38,6 +38,15 @@ INSERT INTO team (code, name, ldu_code) VALUES ('N07601', 'CRO 4', 'LDNNCRO');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07LBR', 'CRO 5', 'LDNNCRO');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07V04', 'CRO PQiP', 'LDNNCRO');
 
+INSERT INTO pdu (code, name, region_code) VALUES ('LDNEHH', 'Ealing and Hillingdon', 'N07');
+INSERT INTO ldu (code, name, pdu_code) VALUES ('LDNNEAL', 'Ealing LDU', 'LDNEHH');
+INSERT INTO team (code, name, ldu_code) VALUES ('N07EAL', 'Awaiting Allocation Ealing', 'LDNNEAL');
+INSERT INTO team (code, name, ldu_code) VALUES ('N07358', 'EAH PQiP', 'LDNNEAL');
+INSERT INTO team (code, name, ldu_code) VALUES ('N07537', 'EAL 1', 'LDNNEAL');
+INSERT INTO team (code, name, ldu_code) VALUES ('N07538', 'EAL 2', 'LDNNEAL');
+INSERT INTO team (code, name, ldu_code) VALUES ('N07609', 'EAL 3', 'LDNNEAL');
+INSERT INTO team (code, name, ldu_code) VALUES ('N07LCF', 'EAL 4', 'LDNNEAL');
+
 INSERT INTO ldu (code, name, pdu_code) VALUES ('LDNNHIL', 'HILLINGDON LDU', 'LDNEHH');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07HLG', 'Awaiting Allocation HILLINGDON', 'LDNNHIL');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07542', 'HIL 1', 'LDNNHIL');
