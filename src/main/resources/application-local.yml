@@ -1,0 +1,5 @@
+spring:
+  r2dbc:
+    properties:
+      sslMode: DISABLE
+      sslRootCert:
