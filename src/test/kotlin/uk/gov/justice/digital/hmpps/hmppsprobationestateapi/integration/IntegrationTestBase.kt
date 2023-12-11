@@ -56,8 +56,8 @@ abstract class IntegrationTestBase {
     teams = listOf(
       Triple("WT1", "Wrexham - Team 1", false),
       Triple("TM2", "Ynys Mon - Team 1", false),
-      Triple("DELETEDTEAM", "Deleted Team", true)
-    )
+      Triple("DELETEDTEAM", "Deleted Team", true),
+    ),
   )
 
   protected fun setupLondonLDUs() {
@@ -70,8 +70,8 @@ abstract class IntegrationTestBase {
       lduName = "Camden And Islington LDU",
       teams = listOf(
         Triple("CAI1", "CAI 1", false),
-        Triple("CAI2", "CAI 2", false)
-      )
+        Triple("CAI2", "CAI 2", false),
+      ),
     )
     setupEstate(
       regionCode = "LN",
@@ -82,8 +82,8 @@ abstract class IntegrationTestBase {
       lduName = "Hackney LDU",
       teams = listOf(
         Triple("CRO1", "CRO 1", false),
-        Triple("CRO2", "CRO 2", false)
-      )
+        Triple("CRO2", "CRO 2", false),
+      ),
     )
   }
 
@@ -99,8 +99,8 @@ abstract class IntegrationTestBase {
         Triple("CB1", "Central Birmingham 1", false),
         Triple("CB2", "Central Birmingham 1", false),
         Triple("SB1", "South Birmingham 1", false),
-        Triple("SB2", "South Birmingham 2", false)
-      )
+        Triple("SB2", "South Birmingham 2", false),
+      ),
     )
     setupEstate(
       regionCode = "WM",
@@ -112,8 +112,8 @@ abstract class IntegrationTestBase {
       teams = listOf(
         Triple("COV1", "Coventry Team 1", false),
         Triple("COV2", "Coventry Team 2", false),
-        Triple("COV4", "Coventry PQIP", false)
-      )
+        Triple("COV4", "Coventry PQIP", false),
+      ),
     )
   }
 
@@ -130,7 +130,7 @@ abstract class IntegrationTestBase {
     val region = Region(code = regionCode, name = regionName, new = true)
     val probationDeliveryUnit = ProbationDeliveryUnit(code = pduCode, name = pduName, regionCode = region.code, new = true)
     val localDeliveryUnit = LocalDeliveryUnit(code = lduCode, name = lduName, pduCode = probationDeliveryUnit.code, new = true)
-   if (!regionRepository.existsById(region.code)) {
+    if (!regionRepository.existsById(region.code)) {
       regionRepository.save(region)
     }
     if (!probationDeliveryUnitRepository.existsById(probationDeliveryUnit.code)) {
@@ -148,17 +148,17 @@ abstract class IntegrationTestBase {
           name = it.second,
           lduCode = localDeliveryUnit.code,
           softDeleted = it.third,
-          new = true
+          new = true,
         )
         teamRepository.save(team)
         team
-      }
+      },
     )
   }
 }
 
-data class EstateOverview (
+data class EstateOverview(
   val region: Region,
   val probationDeliveryUnit: ProbationDeliveryUnit,
-  val teams: List<Team>
+  val teams: List<Team>,
 )
