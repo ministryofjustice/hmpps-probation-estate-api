@@ -46,11 +46,90 @@ abstract class IntegrationTestBase {
     regionRepository.deleteAll()
   }
 
-  fun setupEstate(teamCode: String = "TM1", teamSoftDeleted: Boolean = false): EstateOverview = runBlocking {
-    val region = Region(code = "REGION1", name = "Region Name", new = true)
-    val probationDeliveryUnit = ProbationDeliveryUnit(code = "PDU1", name = "PDU Name", regionCode = region.code, new = true)
-    val localDeliveryUnit = LocalDeliveryUnit(code = "LDU1", name = "LDU Name", pduCode = probationDeliveryUnit.code, new = true)
-    val team = Team(code = teamCode, name = "Team Name", lduCode = localDeliveryUnit.code, softDeleted = teamSoftDeleted, new = true)
+  protected fun setupWalesSingleLDU() = setupEstate(
+    regionCode = "WS",
+    regionName = "Wales",
+    pduCode = "NW_PDU",
+    pduName = "North Wales",
+    lduCode = "NW_LDU",
+    lduName = "North Wales",
+    teams = listOf(
+      Triple("WT1", "Wrexham - Team 1", false),
+      Triple("TM2", "Ynys Mon - Team 1", false),
+      Triple("DELETEDTEAM", "Deleted Team", true),
+    ),
+  )
+
+  protected fun setupLondonLDUs() {
+    setupEstate(
+      regionCode = "LN",
+      regionName = "London",
+      pduCode = "CI_PDU",
+      pduName = "Camden, Islington",
+      lduCode = "CI_LDU",
+      lduName = "Camden And Islington LDU",
+      teams = listOf(
+        Triple("CAI1", "CAI 1", false),
+        Triple("CAI2", "CAI 2", false),
+      ),
+    )
+    setupEstate(
+      regionCode = "LN",
+      regionName = "London",
+      pduCode = "HC_PDU",
+      pduName = "Hackney and City",
+      lduCode = "HC_LDU",
+      lduName = "Hackney LDU",
+      teams = listOf(
+        Triple("CRO1", "CRO 1", false),
+        Triple("CRO2", "CRO 2", false),
+      ),
+    )
+  }
+
+  protected fun setupWestMidlandsLDUs() {
+    setupEstate(
+      regionCode = "WM",
+      regionName = "West Midlands Region",
+      pduCode = "BC_PDU",
+      pduName = "Birmingham Central and South",
+      lduCode = "BC_LDU",
+      lduName = "Birmingham Central and South",
+      teams = listOf(
+        Triple("CB1", "Central Birmingham 1", false),
+        Triple("CB2", "Central Birmingham 1", false),
+        Triple("SB1", "South Birmingham 1", false),
+        Triple("SB2", "South Birmingham 2", false),
+      ),
+    )
+    setupEstate(
+      regionCode = "WM",
+      regionName = "West Midlands Region",
+      pduCode = "COV_PDU",
+      pduName = "Coventry",
+      lduCode = "COV_LDU",
+      lduName = "Coventry LDU",
+      teams = listOf(
+        Triple("COV1", "Coventry Team 1", false),
+        Triple("COV2", "Coventry Team 2", false),
+        Triple("COV4", "Coventry PQIP", false),
+      ),
+    )
+  }
+
+  protected fun setupEstate(
+    regionCode: String = "REGION1",
+    regionName: String = "Region Name",
+    pdus: List<Triple<String, String, Boolean>> = listOf(Triple("TM1", "Team Name", false)),
+    pduCode: String = "PDU1",
+    pduName: String = "PDU Name",
+    lduCode: String = "LDU1",
+    lduName: String = "LDU Name",
+    teams: List<Triple<String, String, Boolean>> = listOf(Triple("TM1", "Team Name", false)),
+  ): EstateOverview = runBlocking {
+    val region = Region(code = regionCode, name = regionName, new = true)
+    val probationDeliveryUnit = ProbationDeliveryUnit(code = pduCode, name = pduName, regionCode = region.code, new = true)
+    val localDeliveryUnit = LocalDeliveryUnit(code = lduCode, name = lduName, pduCode = probationDeliveryUnit.code, new = true)
     if (!regionRepository.existsById(region.code)) {
       regionRepository.save(region)
     }
@@ -60,9 +139,26 @@ abstract class IntegrationTestBase {
     if (!localDeliveryUnitRepository.existsById(localDeliveryUnit.code)) {
       localDeliveryUnitRepository.save(localDeliveryUnit)
     }
-    teamRepository.save(team)
-    EstateOverview(region, probationDeliveryUnit, team)
+    EstateOverview(
+      region,
+      probationDeliveryUnit,
+      teams = teams.map {
+        val team = Team(
+          code = it.first,
+          name = it.second,
+          lduCode = localDeliveryUnit.code,
+          softDeleted = it.third,
+          new = true,
+        )
+        teamRepository.save(team)
+        team
+      },
+    )
   }
 }
 
-data class EstateOverview constructor(val region: Region, val probationDeliveryUnit: ProbationDeliveryUnit, val team: Team)
+data class EstateOverview(
+  val region: Region,
+  val probationDeliveryUnit: ProbationDeliveryUnit,
+  val teams: List<Team>,
+)

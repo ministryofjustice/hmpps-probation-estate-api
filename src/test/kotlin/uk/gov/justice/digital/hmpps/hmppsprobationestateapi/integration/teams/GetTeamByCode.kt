@@ -9,20 +9,20 @@ class GetTeamByCode : IntegrationTestBase() {
   fun `retrieve team details by code`() {
     val estateOverview = setupEstate()
     webTestClient.get()
-      .uri("/team/${estateOverview.team.code}")
+      .uri("/team/${estateOverview.teams[0].code}")
       .exchange()
       .expectStatus()
       .isOk
       .expectBody()
-      .jsonPath("$.code").isEqualTo(estateOverview.team.code)
-      .jsonPath("$.name").isEqualTo(estateOverview.team.name)
+      .jsonPath("$.code").isEqualTo(estateOverview.teams[0].code)
+      .jsonPath("$.name").isEqualTo(estateOverview.teams[0].name)
       .jsonPath("$.probationDeliveryUnit.code").isEqualTo(estateOverview.probationDeliveryUnit.code)
       .jsonPath("$.probationDeliveryUnit.name").isEqualTo(estateOverview.probationDeliveryUnit.name)
   }
 
   @Test
   fun `Not found when get team by code that doesn't exist`() {
-    val team = setupEstate()
+    setupEstate()
     webTestClient.get()
       .uri("/team/NOTEAMEXISTS")
       .exchange()

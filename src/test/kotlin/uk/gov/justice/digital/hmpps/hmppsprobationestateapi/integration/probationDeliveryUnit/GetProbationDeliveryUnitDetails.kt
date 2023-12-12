@@ -8,25 +8,24 @@ class GetProbationDeliveryUnitDetails : IntegrationTestBase() {
 
   @Test
   fun `must get PDU and all teams associated`(): Unit = runBlocking {
-    val firstTeamCode = "TM1"
-    val secondTeamCode = "TM2"
-    val firstTeamEstate = setupEstate(firstTeamCode)
-    val secondTeamEstate = setupEstate(secondTeamCode)
-    val deletedTeamEstate = setupEstate("DELETEDTEAM", true)
+    val firstTeam = Triple("TM1", "Team 1", false)
+    val secondTeam = Triple("TM2", "Team 2", false)
+    val deletedTeam = Triple("DELETEDTEAM", "Deleted Team", true)
+    val estate = setupEstate(teams = listOf(firstTeam, secondTeam, deletedTeam))
 
     webTestClient.get()
-      .uri("/probationDeliveryUnit/${firstTeamEstate.probationDeliveryUnit.code}")
+      .uri("/probationDeliveryUnit/${estate.probationDeliveryUnit.code}")
       .exchange()
       .expectStatus()
       .isOk
       .expectBody()
-      .jsonPath("$.code").isEqualTo(firstTeamEstate.probationDeliveryUnit.code)
-      .jsonPath("$.name").isEqualTo(firstTeamEstate.probationDeliveryUnit.name)
-      .jsonPath("$.region.code").isEqualTo(firstTeamEstate.region.code)
-      .jsonPath("$.region.name").isEqualTo(firstTeamEstate.region.name)
-      .jsonPath("$.teams.[?(@.code=='${firstTeamEstate.team.code}')].name").isEqualTo(firstTeamEstate.team.name)
-      .jsonPath("$.teams.[?(@.code=='${secondTeamEstate.team.code}')].name").isEqualTo(secondTeamEstate.team.name)
-      .jsonPath("$.teams.[?(@.code=='${deletedTeamEstate.team.code}')]").doesNotExist()
+      .jsonPath("$.code").isEqualTo(estate.probationDeliveryUnit.code)
+      .jsonPath("$.name").isEqualTo(estate.probationDeliveryUnit.name)
+      .jsonPath("$.region.code").isEqualTo(estate.region.code)
+      .jsonPath("$.region.name").isEqualTo(estate.region.name)
+      .jsonPath("$.teams.[?(@.code=='${estate.teams[0].code}')].name").isEqualTo(estate.teams[0].name)
+      .jsonPath("$.teams.[?(@.code=='${estate.teams[1].code}')].name").isEqualTo(estate.teams[1].name)
+      .jsonPath("$.teams.[?(@.code=='${estate.teams[2].code}')]").doesNotExist()
   }
 
   @Test
