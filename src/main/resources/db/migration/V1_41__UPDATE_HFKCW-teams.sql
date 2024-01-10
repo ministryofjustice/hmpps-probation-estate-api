@@ -12,4 +12,4 @@ SET name = 'HFKCW4'
 WHERE code = 'N07001';
 UPDATE team
 SET name = 'HFCKW PQiP'
-WHERE code = 'LDNNHAF';
+WHERE code = 'N07V10';
