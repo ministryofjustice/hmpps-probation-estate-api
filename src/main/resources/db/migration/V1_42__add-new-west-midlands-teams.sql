@@ -9,5 +9,3 @@ INSERT INTO team (code, name, ldu_code) VALUES ('N52YAC', 'Young Adults Central 
 INSERT INTO team (code, name, ldu_code) VALUES ('N52YAE', 'Young Adults East Birmingham', 'N52BIRL');
 INSERT INTO team (code, name, ldu_code) VALUES ('N52YAN', 'Young Adults North Birmingham', 'N52BIRL');
 INSERT INTO team (code, name, ldu_code) VALUES ('N52YAS', 'Young Adults South Birmingham', 'N52BIRL');
-INSERT INTO team (code, name, ldu_code) VALUES ('N52SAS', 'IOM Staffordshire', 'N52BIRL');
-INSERT INTO team (code, name, ldu_code) VALUES ('N52SAM', 'Walsall and Wolverhampton Womens Team ', 'N52BIRL');
