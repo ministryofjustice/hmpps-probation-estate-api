@@ -26,7 +26,7 @@ dependencies {
   implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.2.0")
 
   runtimeOnly("org.flywaydb:flyway-core")
-  runtimeOnly("org.postgresql:r2dbc-postgresql:1.0.2.RELEASE")
+  runtimeOnly("org.postgresql:r2dbc-postgresql:1.0.4.RELEASE")
   runtimeOnly("org.postgresql:postgresql:42.6.0")
 
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
