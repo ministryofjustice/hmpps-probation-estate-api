@@ -1,5 +1,5 @@
 INSERT INTO team (code, name, ldu_code) VALUES ('N52MAG', 'Multi-Agency Gang Unit (MAGU)', 'N52BIRL');
-INSERT INTO team (code, name, ldu_code) VALUES ('N52WCB', 'Womens Team Central Birmingham', 'N52BIRL');
+INSERT INTO team (code, name, ldu_code) VALUES ('N52AL2', 'BCCF Pending Allocations Central', 'N52BIRL');
 INSERT INTO team (code, name, ldu_code) VALUES ('N52AL4', 'BCCF Pending Allocations East', 'N52BIRL');
 INSERT INTO team (code, name, ldu_code) VALUES ('N52AL3', 'BCCF Pending Allocations North', 'N52BIRL');
 INSERT INTO team (code, name, ldu_code) VALUES ('N52AL1', 'BCCF Pending Allocations South', 'N52BIRL');
