@@ -4,8 +4,8 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.IntegrationTestBase
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.stubs.regionsByTeamCodesRequestBody
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.stubs.regionsByTeamCodesResponseBody
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.stubs.REGIONS_BY_TEAM_CODES_REQUEST_BODY
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.stubs.REGIONS_BY_TEAM_CODES_RESPONSE_BODY
 
 class GetRegionsByTeamCodes : IntegrationTestBase() {
 
@@ -21,11 +21,11 @@ class GetRegionsByTeamCodes : IntegrationTestBase() {
     webTestClient.post()
       .uri("/regions")
       .contentType(MediaType.APPLICATION_JSON)
-      .bodyValue(regionsByTeamCodesRequestBody)
+      .bodyValue(REGIONS_BY_TEAM_CODES_REQUEST_BODY)
       .exchange()
       .expectStatus()
       .isOk
       .expectBody()
-      .json(regionsByTeamCodesResponseBody)
+      .json(REGIONS_BY_TEAM_CODES_RESPONSE_BODY)
   }
 }
