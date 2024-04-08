@@ -8,6 +8,3 @@ INSERT INTO team (code, name, ldu_code) VALUES ('N07KCW', 'HFKCW-HAF1', 'LDNNHAF
 INSERT INTO team (code, name, ldu_code) VALUES ('N07HFL', 'HFKCW-HAF2', 'LDNNHAF');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07KC1', 'HFKCW-KAC1', 'LDNNKCW');
 INSERT INTO team (code, name, ldu_code) VALUES ('N07WES', 'HFKCW-WES1', 'LDNNKCW');
-
-
-
