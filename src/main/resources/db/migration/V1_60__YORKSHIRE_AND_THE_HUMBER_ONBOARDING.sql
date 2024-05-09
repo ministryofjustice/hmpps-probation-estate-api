@@ -40,7 +40,7 @@ INSERT INTO ldu (code, name, pdu_code) VALUES ('N55NOYK', 'Non OM York', 'N55YRK
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N55YORL', 'York', 'N55YRK');
 
 INSERT INTO team (code, name, ldu_code) VALUES('N55AA1', 'Awaiting Allocation Barnsley and Rotherham', 'N55NBS');
-INSERT INTO team (code, name, ldu_code) VALUES('N55AA1', 'UPW - Barnsley and Rotherham Sentence Management', 'N55NBS');
+INSERT INTO team (code, name, ldu_code) VALUES('N55UBR', 'UPW - Barnsley and Rotherham Sentence Management', 'N55NBS');
 INSERT INTO team (code, name, ldu_code) VALUES('N55BAC', 'Barnsley Community Integration Team', 'N55BARL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55BM1', 'Barnsley Sentence Management Team 1', 'N55BARL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55BM2', 'Barnsley Sentence Management Team 2', 'N55BARL');
