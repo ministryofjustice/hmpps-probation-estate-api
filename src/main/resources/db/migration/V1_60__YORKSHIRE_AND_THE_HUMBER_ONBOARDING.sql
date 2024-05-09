@@ -96,7 +96,7 @@ INSERT INTO team (code, name, ldu_code) VALUES('N55HS6', 'Hull Sentence Manageme
 INSERT INTO team (code, name, ldu_code) VALUES('N55N55', 'Hull Sentence Management Team 10', 'N55HUL');
 
 INSERT INTO team (code, name, ldu_code) VALUES('N55AAK', 'Awaiting Allocation Kirklees', 'N55NKS');
-INSERT INTO team (code, name, ldu_code) VALUES('N55AAK', 'Kirklees Community Integration Team', 'N55KIRL');
+INSERT INTO team (code, name, ldu_code) VALUES('N55KS5', 'Kirklees Community Integration Team', 'N55KIRL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55KS1', 'Kiklees Sentence Management Team 1', 'N55KIRL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55KS2', 'Kiklees Sentence Management Team 2', 'N55KIRL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55KS3', 'Kiklees Sentence Management Team 3', 'N55KIRL');
