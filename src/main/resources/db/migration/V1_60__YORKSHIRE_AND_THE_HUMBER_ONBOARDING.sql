@@ -25,6 +25,7 @@ INSERT INTO ldu (code, name, pdu_code) VALUES ('N55NHEY', 'Non OM Hull and East 
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N55EYL', 'East Riding', 'N55HER');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N55HUL', 'Hull', 'N55HER');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N55NKS', 'Non OM Kirklees', 'N55KIR');
+INSERT INTO ldu (code, name, pdu_code) VALUES ('N55KIRL', 'Kirklees', 'N55KIR');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N55NLE', 'Non OM Leeds', 'N55LEE');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N55LEEL', 'Leeds', 'N55LEE');
 INSERT INTO ldu (code, name, pdu_code) VALUES ('N55NNEL', 'Non OM North and NE Lincs', 'N55NNEL');
@@ -97,10 +98,10 @@ INSERT INTO team (code, name, ldu_code) VALUES('N55N55', 'Hull Sentence Manageme
 
 INSERT INTO team (code, name, ldu_code) VALUES('N55AAK', 'Awaiting Allocation Kirklees', 'N55NKS');
 INSERT INTO team (code, name, ldu_code) VALUES('N55KS5', 'Kirklees Community Integration Team', 'N55KIRL');
-INSERT INTO team (code, name, ldu_code) VALUES('N55KS1', 'Kiklees Sentence Management Team 1', 'N55KIRL');
-INSERT INTO team (code, name, ldu_code) VALUES('N55KS2', 'Kiklees Sentence Management Team 2', 'N55KIRL');
-INSERT INTO team (code, name, ldu_code) VALUES('N55KS3', 'Kiklees Sentence Management Team 3', 'N55KIRL');
-INSERT INTO team (code, name, ldu_code) VALUES('N55KS4', 'Kiklees Sentence Management Team 4', 'N55KIRL');
+INSERT INTO team (code, name, ldu_code) VALUES('N55KS1', 'Kirklees Sentence Management Team 1', 'N55KIRL');
+INSERT INTO team (code, name, ldu_code) VALUES('N55KS2', 'Kirklees Sentence Management Team 2', 'N55KIRL');
+INSERT INTO team (code, name, ldu_code) VALUES('N55KS3', 'Kirklees Sentence Management Team 3', 'N55KIRL');
+INSERT INTO team (code, name, ldu_code) VALUES('N55KS4', 'Kirklees Sentence Management Team 4', 'N55KIRL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55KUW', 'UPW- Kirklees Sentence Management Team 5', 'N55KIRL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55KR6', 'Kirklees Sentence Management Team 6', 'N55KIRL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55KS7', 'Kirklees Sentence Management Team 7', 'N55KIRL');
