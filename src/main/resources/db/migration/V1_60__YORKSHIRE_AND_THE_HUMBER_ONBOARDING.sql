@@ -102,7 +102,7 @@ INSERT INTO team (code, name, ldu_code) VALUES('N55KS1', 'Kirklees Sentence Mana
 INSERT INTO team (code, name, ldu_code) VALUES('N55KS2', 'Kirklees Sentence Management Team 2', 'N55KIRL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55KS3', 'Kirklees Sentence Management Team 3', 'N55KIRL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55KS4', 'Kirklees Sentence Management Team 4', 'N55KIRL');
-INSERT INTO team (code, name, ldu_code) VALUES('N55KUW', 'UPW- Kirklees Sentence Management Team 5', 'N55KIRL');
+INSERT INTO team (code, name, ldu_code) VALUES('N55KUW', 'UPW - Kirklees Sentence Management Team 5', 'N55KIRL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55KR6', 'Kirklees Sentence Management Team 6', 'N55KIRL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55KS7', 'Kirklees Sentence Management Team 7', 'N55KIRL');
 
