@@ -145,7 +145,7 @@ INSERT INTO team (code, name, ldu_code) VALUES('N55NYB', 'NY Community Integrati
 INSERT INTO team (code, name, ldu_code) VALUES('N55NYP', 'NY PQiP Sentence Management 7', 'N55NYL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55NYL', 'Selby - NY Sentence Management Team 5', 'N55NYL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55NYK', 'Skipton - NY Sentence Management Team 4', 'N55NYL');
-INSERT INTO team (code, name, ldu_code) VALUES('N55YNU', 'UPW-NY Sentence Management Team 6', 'N55NYL');
+INSERT INTO team (code, name, ldu_code) VALUES('N55YNU', 'UPW - NY Sentence Management Team 6', 'N55NYL');
 INSERT INTO team (code, name, ldu_code) VALUES('N55NYS', 'Scarborough - NY Sentence Management Team 1', 'N55NYL');
 
 INSERT INTO team (code, name, ldu_code) VALUES('N55SHF', 'Awaiting Allocation Sheffield', 'N55NSF');
