@@ -1,6 +1,6 @@
 package uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.stubs
 
-const val regionsByTeamCodesRequestBody = """
+const val REGIONS_BY_TEAM_CODES_REQUEST_BODY = """
   {
    "teamCodes":[
       "CB1",
@@ -15,7 +15,7 @@ const val regionsByTeamCodesRequestBody = """
 }
 """
 
-const val regionsByTeamCodesResponseBody = """
+const val REGIONS_BY_TEAM_CODES_RESPONSE_BODY = """
 [
    {
       "region":{

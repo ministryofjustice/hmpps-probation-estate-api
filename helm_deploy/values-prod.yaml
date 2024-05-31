@@ -5,4 +5,5 @@ generic-service:
     host: hmpps-probation-estate-api.hmpps.service.justice.gov.uk
 
 generic-prometheus-alerts:
+  alertSeverity: hmpps-probation-estate-prod-alerts
   ingress5xxErrorWindowMinutes: 4
