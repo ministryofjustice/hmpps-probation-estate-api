@@ -1,5 +1,5 @@
 plugins {
-  id("uk.gov.justice.hmpps.gradle-spring-boot") version "5.15.6"
+  id("uk.gov.justice.hmpps.gradle-spring-boot") version "6.0.1"
   kotlin("plugin.spring") version "1.9.24"
 }
 
@@ -26,6 +26,7 @@ dependencies {
   implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.6.0")
 
   runtimeOnly("org.flywaydb:flyway-core")
+  implementation("org.flywaydb:flyway-database-postgresql")
   runtimeOnly("org.postgresql:r2dbc-postgresql:1.0.5.RELEASE")
   runtimeOnly("org.postgresql:postgresql:42.7.3")
 
@@ -33,7 +34,7 @@ dependencies {
 }
 
 java {
-  toolchain.languageVersion.set(JavaLanguageVersion.of(18))
+  toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 repositories {
   mavenCentral()
@@ -42,7 +43,7 @@ repositories {
 tasks {
   withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
-      jvmTarget = "18"
+      jvmTarget = "21"
     }
   }
 }
