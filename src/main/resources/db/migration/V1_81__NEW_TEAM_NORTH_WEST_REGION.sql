@@ -1,0 +1,1 @@
+INSERT INTO team (code, name, ldu_code) VALUES('N51CBJ', 'Preston 5', 'N51CELA');

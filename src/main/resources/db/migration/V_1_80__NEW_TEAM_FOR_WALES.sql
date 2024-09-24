@@ -1,1 +1,0 @@
-INSERT INTO team (code, name, ldu_code) VALUES('N03CTM', 'Reactive Management Team - CTM', 'N03CTM');
