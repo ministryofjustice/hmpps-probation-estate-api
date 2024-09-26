@@ -1,3 +1,5 @@
+INSERT INTO ldu (code, name, pdu_code) VALUES ('N53NOEW', 'PDU Management Lincolnshire', 'N53EWL');
+
 INSERT INTO team (code, name, ldu_code) VALUES('N53DC5', 'Derby Community Hub', 'N53DCTY');
 INSERT INTO team (code, name, ldu_code) VALUES('N53DSH', 'Derbyshire Community Hub', 'N53DBSL');
 INSERT INTO team (code, name, ldu_code) VALUES('N53DBD', 'Leicestershire Community Hub', 'N53LCSL');
