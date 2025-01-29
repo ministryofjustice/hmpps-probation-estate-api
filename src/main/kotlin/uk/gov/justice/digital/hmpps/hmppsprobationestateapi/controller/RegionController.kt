@@ -29,8 +29,7 @@ class RegionController(private val getRegionService: GetRegionService) {
     ],
   )
   @GetMapping("/regions")
-  suspend fun getAllRegions(): Flow<RegionOverview> =
-    getRegionService.getAll()
+  suspend fun getAllRegions(): Flow<RegionOverview> = getRegionService.getAll()
 
   @Operation(summary = "Get region by code")
   @ApiResponses(
@@ -40,8 +39,7 @@ class RegionController(private val getRegionService: GetRegionService) {
     ],
   )
   @GetMapping("/region/{code}")
-  suspend fun getRegionByCode(@PathVariable(required = true) code: String): RegionDetails =
-    getRegionService.getRegionDetailsByCode(code) ?: throw EntityNotFoundException("No region found for $code")
+  suspend fun getRegionByCode(@PathVariable(required = true) code: String): RegionDetails = getRegionService.getRegionDetailsByCode(code) ?: throw EntityNotFoundException("No region found for $code")
 
   @Operation(summary = "Get regions and teams by region-codes")
   @ApiResponses(
@@ -50,6 +48,5 @@ class RegionController(private val getRegionService: GetRegionService) {
     ],
   )
   @PostMapping("/regions")
-  suspend fun getRegionAndTeamOverviews(@RequestBody(required = true) teamCodes: TeamCodes): List<RegionAndTeamOverview> =
-    getRegionService.getRegionAndTeamOverviews(teamCodes.teamCodes)
+  suspend fun getRegionAndTeamOverviews(@RequestBody(required = true) teamCodes: TeamCodes): List<RegionAndTeamOverview> = getRegionService.getRegionAndTeamOverviews(teamCodes.teamCodes)
 }

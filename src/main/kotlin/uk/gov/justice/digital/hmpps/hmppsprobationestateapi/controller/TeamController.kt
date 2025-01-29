@@ -28,8 +28,7 @@ class TeamController(
     ],
   )
   @GetMapping("/team/search")
-  suspend fun getTeamsByCode(@RequestParam(required = true) codes: List<String>): Flow<TeamOverview> =
-    getTeamService.findTeamsByCode(codes)
+  suspend fun getTeamsByCode(@RequestParam(required = true) codes: List<String>): Flow<TeamOverview> = getTeamService.findTeamsByCode(codes)
 
   @Operation(summary = "Get team by code")
   @ApiResponses(
@@ -39,6 +38,5 @@ class TeamController(
     ],
   )
   @GetMapping("/team/{teamCode}")
-  suspend fun getTeamByCode(@PathVariable teamCode: String): TeamDetails =
-    getTeamService.findTeamDetailsByCode(teamCode) ?: throw EntityNotFoundException("No team found for $teamCode")
+  suspend fun getTeamByCode(@PathVariable teamCode: String): TeamDetails = getTeamService.findTeamDetailsByCode(teamCode) ?: throw EntityNotFoundException("No team found for $teamCode")
 }
