@@ -23,6 +23,5 @@ class AllEstateController(private val allEstateService: AllEstateService) {
     ],
   )
   @GetMapping("/all/region/{regionCode}")
-  suspend fun getEstateByRegionCode(@PathVariable(required = true) regionCode: String): Map<String, AllProbationDeliveryUnit> =
-    allEstateService.getEstateByRegionCode(regionCode)
+  suspend fun getEstateByRegionCode(@PathVariable(required = true) regionCode: String): Map<String, AllProbationDeliveryUnit> = allEstateService.getEstateByRegionCode(regionCode)
 }
