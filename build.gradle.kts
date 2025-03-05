@@ -1,5 +1,5 @@
 plugins {
-  id("uk.gov.justice.hmpps.gradle-spring-boot") version "7.1.2"
+  id("uk.gov.justice.hmpps.gradle-spring-boot") version "7.1.3"
   kotlin("plugin.spring") version "2.1.10"
 }
 
@@ -27,7 +27,7 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.10.1")
 
-  implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.4")
+  implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.5")
 
   runtimeOnly("org.flywaydb:flyway-core")
   implementation("org.flywaydb:flyway-database-postgresql")
