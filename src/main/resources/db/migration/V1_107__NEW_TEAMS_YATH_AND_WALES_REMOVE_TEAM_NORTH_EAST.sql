@@ -14,7 +14,7 @@ INSERT INTO team (code, name, ldu_code) VALUES('N55UAA', 'CP Awaiting Allocation
 INSERT INTO team (code, name, ldu_code) VALUES('N55UAB', 'CP Awaiting Allocation York', 'N55NOUP');
 
 --wfp-2987
-DELETE FROM team WHERE code = 'N54PQ7'
+DELETE FROM team WHERE code = 'N54PQ7';
 
 --wfp-2988
 INSERT INTO team (code, name, ldu_code) VALUES('N03P07', 'Swansea – Team 7', 'N03SNT');
