@@ -1,4 +1,4 @@
---wfp-3036
+--wfp-3036 - new teams
 INSERT INTO team (code, name, ldu_code) VALUES('N50CAN', 'GM BR Bury 2', 'N50BUR');
 INSERT INTO team (code, name, ldu_code) VALUES('N50BUA', 'GM BR Bury RESET', 'N50BUR');
 INSERT INTO team (code, name, ldu_code) VALUES('N50CAJ', 'GM BR Rochdale 3', 'N50ROC');
