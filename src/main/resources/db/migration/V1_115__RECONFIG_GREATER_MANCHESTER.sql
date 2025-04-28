@@ -14,4 +14,4 @@ UPDATE team SET ldu_code = 'N50STO' WHERE code IN ('N50CAK', 'N50ST3', 'N50ST4',
 UPDATE team SET ldu_code = 'N50TAM' WHERE code IN ('N50TA2', 'N50TA1', 'N50CAL', 'N50TS4');
 
 --clean up pdu's
-DELETE FROM pdu WHERE code IN ('N50STTR', 'N50TAST');
+DELETE FROM pdu WHERE code IN ('N50STTR', 'N50TAST', 'N50SATR');
