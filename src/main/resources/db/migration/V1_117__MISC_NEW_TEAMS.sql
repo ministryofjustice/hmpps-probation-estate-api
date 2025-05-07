@@ -3,3 +3,8 @@ INSERT INTO team (code, name, ldu_code) VALUES('N56RPD', 'BDS-Resettlement POD',
 INSERT INTO team (code, name, ldu_code) VALUES('N03GWT', 'Final Third Team – GWT', 'WPTGWT');
 INSERT INTO team (code, name, ldu_code) VALUES('N52RHB', 'BCF Reset Hub', 'N52BIRL');
 INSERT INTO team (code, name, ldu_code) VALUES('N52WRH', 'Worcestershire Reactive Hub', 'N52WORL');
+--wfp-3102
+INSERT INTO team (code, name, ldu_code) VALUES('N59TAY', 'UPW SC - Bucks', 'N59ACT');
+INSERT INTO team (code, name, ldu_code) VALUES('N59TOX', 'UPW SC - Oxon', 'N59ACT');
+INSERT INTO team (code, name, ldu_code) VALUES('N59WBI', 'West Berkshire Impact', 'N59WESB');
+
