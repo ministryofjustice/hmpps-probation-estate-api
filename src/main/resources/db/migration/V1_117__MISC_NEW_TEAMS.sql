@@ -4,8 +4,7 @@ INSERT INTO team (code, name, ldu_code) VALUES('N03GWT', 'Final Third Team – G
 INSERT INTO team (code, name, ldu_code) VALUES('N52RHB', 'BCF Reset Hub', 'N52BIRL');
 INSERT INTO team (code, name, ldu_code) VALUES('N52WRH', 'Worcestershire Reactive Hub', 'N52WORL');
 --wfp-3102
-INSERT INTO ldu (code, name, pdu_code) VALUES('N59ACT', 'Unpaid Work', 'N59UPAC');
-UPDATE team set name = 'UPW SC - Bucks',ldu_code = 'N59ACT' where code = 'N59TAY';
-INSERT INTO team (code, name, ldu_code) VALUES('N59TOX', 'UPW SC - Oxon', 'N59ACT');
+UPDATE team set name = 'UPW SC - Bucks' where code = 'N59TAY';
+INSERT INTO team (code, name, ldu_code) VALUES('N59TOX', 'UPW SC - Oxon', 'N59UPW');
 INSERT INTO team (code, name, ldu_code) VALUES('N59WBI', 'West Berkshire Impact', 'N59WESB');
 
