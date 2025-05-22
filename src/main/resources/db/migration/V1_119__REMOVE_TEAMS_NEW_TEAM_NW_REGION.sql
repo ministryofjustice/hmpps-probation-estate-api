@@ -7,4 +7,4 @@ DELETE FROM team where code = 'N51SH1';
 DELETE FROM team where code = 'N51SH2';
 
 --wfp-3137
-INSERT INTO team (code, name, ldu_code) values('N51REH', 'Carlisle 2', 'N51CARL'
+INSERT INTO team (code, name, ldu_code) values('N51REH', 'Carlisle 2', 'N51CARL');
