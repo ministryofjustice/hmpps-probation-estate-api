@@ -60,6 +60,7 @@ workflows:
             branches:
               only:
                 - main
+                - /epic.*/
       - hmpps/deploy_env:
           name: deploy_dev
           env: "dev"
