@@ -9,7 +9,7 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.reactive.server.WebTestClient
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-@Import(DeliusClientTestConfig::class, TestSecurityConfig::class)
+@Import(DeliusClientTestConfig::class, TestSecurityConfig::class, NoOpCacheConfig::class)
 @ActiveProfiles("test")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class IntegrationTestBase {
