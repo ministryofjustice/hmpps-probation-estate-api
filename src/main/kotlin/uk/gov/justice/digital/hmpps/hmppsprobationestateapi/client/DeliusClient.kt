@@ -1,5 +1,6 @@
 package uk.gov.justice.digital.hmpps.hmppsprobationestateapi.client
 
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
 import org.springframework.web.reactive.function.client.awaitBody
@@ -7,6 +8,7 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.client.dto.Probation
 
 @Component
 class DeliusClient(private val webClient: WebClient, private val teamCodeFilter: TeamCodeFilter) {
+  @Cacheable("probationEstate")
   suspend fun getProbationEstate(): ProbationEstate {
     val fullEstate = webClient
       .get()
