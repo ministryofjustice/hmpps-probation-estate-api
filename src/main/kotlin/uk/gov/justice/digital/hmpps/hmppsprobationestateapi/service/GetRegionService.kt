@@ -10,6 +10,7 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.Regio
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.RegionDetails
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.RegionOverview
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamOverview
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.exception.EntityNotFoundException
 
 @Service
 class GetRegionService(
@@ -17,9 +18,15 @@ class GetRegionService(
 ) {
   suspend fun getAll(): Flow<RegionOverview> = deliusClient.getProbationEstate().providers.asFlow().map { RegionOverview(it.code, it.description) }
 
-  suspend fun getRegionDetailsByCode(code: String): RegionDetails? = deliusClient.getProbationEstate().providers.firstOrNull { it.code == code }.let {
-    val pdus = it?.probationDeliveryUnits?.map { ProbationDeliveryUnitOverview(it.code, it.description) }
-    RegionDetails(it?.code ?: "", it?.description ?: "", pdus!!)
+  suspend fun getRegionDetailsByCode(code: String): RegionDetails {
+    val provider = deliusClient.getProbationEstate().providers.firstOrNull { it.code == code }
+      ?: throw EntityNotFoundException("Region with code $code not found")
+
+    val pdus = provider.probationDeliveryUnits.map {
+      ProbationDeliveryUnitOverview(it.code, it.description)
+    }
+
+    return RegionDetails(provider.code, provider.description, pdus)
   }
 
   suspend fun getRegionAndTeamOverviews(teamCodes: List<String>): List<RegionAndTeamOverview> {
@@ -33,16 +40,16 @@ class GetRegionService(
         if (matchingTeams.isNotEmpty()) provider to matchingTeams else null
       }.toMap()
     val returnList = ArrayList<RegionAndTeamOverview>()
-    results.forEach { provider ->
-      {
-        val regionOverview = RegionOverview(provider.key.code, provider.key.description)
-        val teamOverviews = provider.value.map { team -> TeamOverview(team.code, team.description) }
-          .forEach { teamOverview ->
-            {
-              returnList.add(RegionAndTeamOverview(regionOverview, teamOverview))
-            }
-          }
+
+    results.forEach { (provider, teams) ->
+      val regionOverview = RegionOverview(provider.code, provider.description)
+      teams.forEach { team ->
+        returnList.add(RegionAndTeamOverview(regionOverview, TeamOverview(team.code, team.description)))
       }
+    }
+
+    if (returnList.isEmpty()) {
+      throw EntityNotFoundException("No teams found for given codes")
     }
     return returnList.toList()
   }

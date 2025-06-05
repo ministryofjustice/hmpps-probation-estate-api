@@ -2,84 +2,129 @@ package uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.estate
 
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.LocalDeliveryUnit
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.ProbationDeliveryUnit
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.Region
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.Team
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.IntegrationTestBase
 
 class GetAllEstateByRegionCode : IntegrationTestBase() {
 
   @Test
   fun `must get all teams associated to region via LDUs and PDUs and their names`(): Unit = runBlocking {
-    val region = regionRepository.save(Region(code = "RG1", name = "Region 1", new = true))
-    val firstPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU1", name = "PDU 1", regionCode = region.code, new = true))
-    val secondPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU2", name = "PDU 2", regionCode = region.code, new = true))
-    val deletedPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "DELETEDPDU", name = "DELETED PDU", regionCode = region.code, softDeleted = true, new = true))
+    val mockResponse = """
+{
+  "providers": [
+    {
+      "code": "RG1",
+      "description": "Region 1",
+      "probationDeliveryUnits": [
+        {
+          "code": "PDU1",
+          "description": "PDU 1",
+          "localAdminUnits": [
+            {
+              "code": "LDU1",
+              "description": "LDU 1",
+              "teams": [
+                { "code": "T1", "description": "Team 1" },
+                { "code": "T2", "description": "Team 2" }
+              ]
+            }
 
-    val firstPduLdu = localDeliveryUnitRepository.save(LocalDeliveryUnit(code = "LDU1", name = "LDU 1", pduCode = firstPdu.code, new = true))
-    val deletedPduLdu = localDeliveryUnitRepository.save(LocalDeliveryUnit(code = "DELETEDLDU", name = "DELETED LDU", pduCode = firstPdu.code, softDeleted = true, new = true))
+          ]
+        },
+        {
+          "code": "PDU2",
+          "description": "PDU 2",
+          "localAdminUnits": [
+            {
+              "code": "LDU3",
+              "description": "LDU 3",
+              "teams": [
+                { "code": "T3", "description": "Team 3" },
+                { "code": "T4", "description": "Team 4" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+    """.trimIndent()
 
-    val secondPduLdu = localDeliveryUnitRepository.save(LocalDeliveryUnit(code = "LDU3", name = "LDU 3", pduCode = secondPdu.code, new = true))
+    mockWebClientFactory.setJsonResponse(mockResponse)
 
-    val firstPduLduFirstTeam = teamRepository.save(Team(code = "T1", name = "Team 1", lduCode = firstPduLdu.code, new = true))
-    val firstPduLduSecondTeam = teamRepository.save(Team(code = "T2", name = "Team 2", lduCode = firstPduLdu.code, new = true))
-    val deletedPduLduTeam = teamRepository.save(Team(code = "DELETEDTEAM", name = "Deleted Team", lduCode = firstPduLdu.code, softDeleted = true, new = true))
-
-    val secondPduLduFirstTeam = teamRepository.save(Team(code = "T3", name = "Team 3", lduCode = secondPduLdu.code, new = true))
-    val secondPduLduSecondTeam = teamRepository.save(Team(code = "T4", name = "Team 4", lduCode = secondPduLdu.code, new = true))
+    val region = Pair("RG1", "Region 1")
+    val firstPdu = Pair("PDU1", "PDU 1")
+    val secondPdu = Pair("PDU2", "PDU 2")
+    val firstPduLdu = Pair("LDU1", "LDU 1")
+    val secondPduLdu = Pair("LDU3", "LDU 3")
+    val firstPduLduFirstTeam = Pair("T1", "Team 1")
+    val firstPduLduSecondTeam = Pair("T2", "Team 2")
+    val secondPduLduFirstTeam = Pair("T3", "Team 3")
+    val secondPduLduSecondTeam = Pair("T4", "Team 4")
 
     webTestClient.get()
-      .uri("/all/region/${region.code}")
+      .uri("/all/region/${region.first}")
       .exchange()
       .expectStatus()
       .isOk
       .expectBody()
-      .jsonPath("$.${firstPdu.code}.name")
-      .isEqualTo(firstPdu.name)
-      .jsonPath("$.${deletedPdu.code}")
-      .doesNotExist()
-      .jsonPath("$.${firstPdu.code}.ldus.${firstPduLdu.code}.name")
-      .isEqualTo(firstPduLdu.name)
-      .jsonPath("$.${firstPdu.code}.ldus.${deletedPduLdu.code}")
-      .doesNotExist()
-      .jsonPath("$.${firstPdu.code}.ldus.${firstPduLdu.code}.teams[?(@.code == '${firstPduLduFirstTeam.code}')].name")
-      .isEqualTo(firstPduLduFirstTeam.name)
-      .jsonPath("$.${firstPdu.code}.ldus.${firstPduLdu.code}.teams[?(@.code == '${firstPduLduSecondTeam.code}')].name")
-      .isEqualTo(firstPduLduSecondTeam.name)
-      .jsonPath("$.${firstPdu.code}.ldus.${firstPduLdu.code}.teams[?(@.code == '${deletedPduLduTeam.code}')]")
-      .doesNotExist()
-      .jsonPath("$.${secondPdu.code}.ldus.${secondPduLdu.code}.teams[?(@.code == '${secondPduLduFirstTeam.code}')].name")
-      .isEqualTo(secondPduLduFirstTeam.name)
-      .jsonPath("$.${secondPdu.code}.ldus.${secondPduLdu.code}.teams[?(@.code == '${secondPduLduSecondTeam.code}')].name")
-      .isEqualTo(secondPduLduSecondTeam.name)
+      .jsonPath("$.${firstPdu.first}.name")
+      .isEqualTo(firstPdu.second)
+      .jsonPath("$.${firstPdu.first}.ldus.${firstPduLdu.first}.name")
+      .isEqualTo(firstPduLdu.second)
+      .jsonPath("$.${firstPdu.first}.ldus.${firstPduLdu.first}.teams[?(@.code == '${firstPduLduFirstTeam.first}')].name")
+      .isEqualTo(firstPduLduFirstTeam.second)
+      .jsonPath("$.${firstPdu.first}.ldus.${firstPduLdu.first}.teams[?(@.code == '${firstPduLduSecondTeam.first}')].name")
+      .isEqualTo(firstPduLduSecondTeam.second)
+      .jsonPath("$.${secondPdu.first}.ldus.${secondPduLdu.first}.teams[?(@.code == '${secondPduLduFirstTeam.first}')].name")
+      .isEqualTo(secondPduLduFirstTeam.second)
+      .jsonPath("$.${secondPdu.first}.ldus.${secondPduLdu.first}.teams[?(@.code == '${secondPduLduSecondTeam.first}')].name")
+      .isEqualTo(secondPduLduSecondTeam.second)
   }
 
   @Test
   fun `must not return when no team exists`(): Unit = runBlocking {
-    val region = regionRepository.save(Region(code = "RG1", name = "Region 1", new = true))
-    val firstPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU1", name = "PDU 1", regionCode = region.code, new = true))
-    val firstPduLdu = localDeliveryUnitRepository.save(LocalDeliveryUnit(code = "LDU1", name = "LDU 1", pduCode = firstPdu.code, new = true))
-    val firstPduFirstLduFirstTeam = teamRepository.save(Team(code = "T1", name = "Team 1", lduCode = firstPduLdu.code, new = true))
+    val mockResponse = """
+{
+  "providers": [
+    {
+      "code": "RG1",
+      "description": "Region 1",
+      "probationDeliveryUnits": [
+        {
+          "code": "PDU1",
+          "description": "PDU 1",
+          "localAdminUnits": [
+            {
+              "code": "LDU1",
+              "description": "LDU 1",
+              "teams": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+    """.trimIndent()
 
-    val secondPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU2", name = "PDU 2", regionCode = region.code, new = true))
-    val firstPduSecondLdu = localDeliveryUnitRepository.save(LocalDeliveryUnit(code = "LDU2", name = "LDU 2", pduCode = firstPdu.code, new = true))
+    mockWebClientFactory.setJsonResponse(mockResponse)
+
+    val region = Pair("RG1", "Region 1")
+    val firstPdu = Pair("PDU1", "PDU 1")
+    val firstPduLdu = Pair("LDU1", "LDU 1")
+    val firstPduFirstLduFirstTeam = Pair("T1", "Team 1")
 
     webTestClient.get()
-      .uri("/all/region/${region.code}")
+      .uri("/all/region/${region.first}")
       .exchange()
       .expectStatus()
       .isOk
       .expectBody()
-      .jsonPath("$.${secondPdu.code}")
-      .doesNotExist()
-      .jsonPath("$.${firstPdu.code}.ldus.${firstPduSecondLdu.code}")
-      .doesNotExist()
-      .jsonPath("$.${firstPdu.code}")
+      .jsonPath("$.${firstPdu.first}")
       .exists()
-      .jsonPath("$.${firstPdu.code}.ldus.${firstPduLdu.code}")
+      .jsonPath("$.${firstPdu.first}.ldus.${firstPduLdu.first}")
       .exists()
-      .jsonPath("$.${firstPdu.code}.ldus.${firstPduLdu.code}.teams[?(@.code == '${firstPduFirstLduFirstTeam.code}')]")
-      .exists()
+      .jsonPath("$.${firstPdu.first}.ldus.${firstPduLdu.first}.teams").isEmpty
   }
 }

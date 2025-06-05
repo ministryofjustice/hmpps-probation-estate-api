@@ -27,9 +27,6 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.10.2")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.10.2")
 
-  implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-  runtimeOnly("org.springframework.boot:spring-boot-starter-jdbc")
-
   implementation("org.springframework.boot:spring-boot-starter-webflux")
 
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
@@ -37,12 +34,8 @@ dependencies {
 
   implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.8")
 
-  runtimeOnly("org.flywaydb:flyway-core")
-  implementation("org.flywaydb:flyway-database-postgresql")
-  runtimeOnly("org.postgresql:r2dbc-postgresql:1.0.7.RELEASE")
-  runtimeOnly("org.postgresql:postgresql:42.7.6")
-
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+  testImplementation("io.mockk:mockk:1.13.10")
 }
 
 java {

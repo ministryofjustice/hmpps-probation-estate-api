@@ -7,12 +7,9 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.client.DeliusClient
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.ProbationDeliveryUnitOverview
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamDetails
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamOverview
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.LocalDeliveryUnitRepository
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.ProbationDeliveryUnitRepository
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.TeamRepository
 
 @Service
-class GetTeamService(private val deliusClient: DeliusClient,) {
+class GetTeamService(private val deliusClient: DeliusClient) {
 
   suspend fun findTeamsByCode(codes: List<String>): Flow<TeamOverview> = deliusClient.getProbationEstate().providers
     .mapNotNull { provider ->

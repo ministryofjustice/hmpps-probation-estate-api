@@ -1,1 +1,0 @@
-INSERT INTO team (code, name, ldu_code) values('N52STC', 'Staffordshire Short Term Custody', 'N52STO');

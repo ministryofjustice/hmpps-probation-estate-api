@@ -1,1 +1,0 @@
-INSERT INTO team (code, name, ldu_code) VALUES ('N07KA2', 'HFKCW-KAC 2', 'LDNNKCW');

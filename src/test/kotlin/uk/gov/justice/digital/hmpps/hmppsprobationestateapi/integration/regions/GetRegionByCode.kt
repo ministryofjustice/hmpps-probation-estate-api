@@ -2,48 +2,102 @@ package uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.regions
 
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.ProbationDeliveryUnit
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.Region
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.IntegrationTestBase
 
 class GetRegionByCode : IntegrationTestBase() {
 
   @Test
   fun `must get region and all PDUs associated`(): Unit = runBlocking {
-    val region = regionRepository.save(Region(code = "RG1", name = "Region 1", new = true))
-    val firstPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU1", name = "PDU 1", regionCode = region.code, new = true))
-    val secondPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU2", name = "PDU 2", regionCode = region.code, new = true))
-    val deletedPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "DELETEDPDU", name = "DELETED PDU", regionCode = region.code, softDeleted = true, new = true))
+    val mockResponse = """
+{
+  "providers": [
+    {
+      "code": "RG1",
+      "description": "Region 1",
+      "probationDeliveryUnits": [
+        {
+          "code": "PDU1",
+          "description": "PDU 1",
+          "localAdminUnits": []
+        },
+        {
+          "code": "PDU2",
+          "description": "PDU 2",
+          "localAdminUnits": []
+        }
+      ]
+    }
+  ]
+}
+    """.trimIndent()
+
+    mockWebClientFactory.setJsonResponse(mockResponse)
+
+    val region = Pair("RG1", "Region 1")
+    val firstPdu = Pair("PDU1", "PDU 1")
+    val secondPdu = Pair("PDU2", "PDU 2")
 
     webTestClient.get()
-      .uri("/region/${region.code}")
+      .uri("/region/${region.first}")
       .exchange()
       .expectStatus()
       .isOk
       .expectBody()
-      .jsonPath("$.code").isEqualTo(region.code)
-      .jsonPath("$.name").isEqualTo(region.name)
-      .jsonPath("$.probationDeliveryUnits.[?(@.code=='${firstPdu.code}')].name").isEqualTo(firstPdu.name)
-      .jsonPath("$.probationDeliveryUnits.[?(@.code=='${secondPdu.code}')].name").isEqualTo(secondPdu.name)
-      .jsonPath("$.probationDeliveryUnits.[?(@.code=='${deletedPdu.code}')]").doesNotExist()
+      .jsonPath("$.code").isEqualTo(region.first)
+      .jsonPath("$.name").isEqualTo(region.second)
+      .jsonPath("$.probationDeliveryUnits.[?(@.code=='${firstPdu.first}')].name").isEqualTo(firstPdu.second)
+      .jsonPath("$.probationDeliveryUnits.[?(@.code=='${secondPdu.first}')].name").isEqualTo(secondPdu.second)
   }
 
   @Test
   fun `can get region without any PDUs`(): Unit = runBlocking {
-    val region = regionRepository.save(Region(code = "RG1", name = "Region 1", new = true))
+    val region = Pair("RG1", "Region 1")
+    val mockResponse = """
+{
+  "providers": [
+    {
+      "code": "RG1",
+      "description": "Region 1",
+      "probationDeliveryUnits": []
+    }
+  ]
+}
+    """.trimIndent()
+
+    mockWebClientFactory.setJsonResponse(mockResponse)
+
     webTestClient.get()
-      .uri("/region/${region.code}")
+      .uri("/region/${region.first}")
       .exchange()
       .expectStatus()
       .isOk
       .expectBody()
-      .jsonPath("$.code").isEqualTo(region.code)
-      .jsonPath("$.name").isEqualTo(region.name)
+      .jsonPath("$.code").isEqualTo(region.first)
+      .jsonPath("$.name").isEqualTo(region.second)
       .jsonPath("$.probationDeliveryUnits").isEmpty
   }
 
   @Test
   fun `Not found when get region by code that doesn't exist`() {
+    val mockResponse = """
+{
+  "providers": [
+    {
+      "code": "RG1",
+      "description": "Region 1",
+      "probationDeliveryUnits": []
+    },
+    {
+      "code": "RG2",
+      "description": "Region 2",
+      "probationDeliveryUnits": []
+    }
+  ]
+}
+    """.trimIndent()
+
+    mockWebClientFactory.setJsonResponse(mockResponse)
+
     webTestClient.get()
       .uri("/region/NOREGIONHERE")
       .exchange()

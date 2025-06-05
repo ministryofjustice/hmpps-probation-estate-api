@@ -1,12 +1,16 @@
 server:
   shutdown: immediate
 
-management.endpoint:
-  health.cache.time-to-live: 0
-  info.cache.time-to-live: 0
-
 spring:
-  r2dbc:
-    properties:
-      sslMode: DISABLE
-      sslRootCert:
+  security:
+    enabled: false
+
+# Optional: override default security config behavior if needed
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
