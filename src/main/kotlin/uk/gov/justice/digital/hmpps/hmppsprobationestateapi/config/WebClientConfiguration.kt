@@ -13,7 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient
 
 @Configuration
 class WebClientConfiguration(
-  @Value("\$WORKFORCE_ALLOCATIONS_TO_DELIUS_ENDPOINT_URL")
+  @Value("\${WORKFORCE_ALLOCATIONS_TO_DELIUS_ENDPOINT_URL}")
   private val workforceAllocationsToDeliusBaseUrl: String,
 ) {
 
