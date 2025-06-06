@@ -5,6 +5,10 @@ spring:
   security:
     enabled: false
 
+oauth:
+  endpoint:
+    url: http://localhost/dummy-oauth
+
 # Optional: override default security config behavior if needed
 management:
   endpoints:
