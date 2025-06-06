@@ -7,7 +7,7 @@ generic-service:
   env:
     APPLICATIONINSIGHTS_CONFIGURATION_FILE: applicationinsights.dev.json
     WORKFORCE_ALLOCATIONS_TO_DELIUS_ENDPOINT_URL: https://workforce-allocations-to-delius-dev.hmpps.service.justice.gov.uk
-
+    OAUTH_ENDPOINT_URL: https://sign-in-dev.hmpps.service.justice.gov.uk/auth
   scheduledDowntime:
     enabled: true
 
