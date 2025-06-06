@@ -59,6 +59,9 @@ workflows:
             branches:
               only:
                 - main
+          pre-steps:
+            - attach_workspace:
+                at: /tmp/circleci_remember
       - request-lower-envs-approval:
           type: approval
           requires:
