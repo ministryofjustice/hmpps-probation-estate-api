@@ -26,10 +26,10 @@ jobs:
       - run:
           command: ./gradlew check
       - run:
-          name: Generate APP_VERSION
+          name: Generate APP_VERSION from Git commit
           command: |
             mkdir -p /tmp/circleci_remember/.circleci_remember
-            echo "1.0.0" > /tmp/circleci_remember/.circleci_remember/APP_VERSION
+            echo "$(git rev-parse --short HEAD)" > /tmp/circleci_remember/.circleci_remember/APP_VERSION
       - persist_to_workspace:
           root: /tmp/circleci_remember
           paths:
@@ -59,6 +59,7 @@ workflows:
             branches:
               only:
                 - main
+                - /epic.*/
           pre-steps:
             - attach_workspace:
                 at: /tmp/circleci_remember
