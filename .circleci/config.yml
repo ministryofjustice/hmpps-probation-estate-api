@@ -25,6 +25,15 @@ jobs:
             - gradle-
       - run:
           command: ./gradlew check
+      - run:
+          name: Generate APP_VERSION
+          command: |
+            mkdir -p /tmp/circleci_remember/.circleci_remember
+            echo "1.0.0" > /tmp/circleci_remember/.circleci_remember/APP_VERSION
+      - persist_to_workspace:
+          root: /tmp/circleci_remember
+          paths:
+            - .circleci_remember
       - save_cache:
           paths:
             - ~/.gradle
