@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
 import org.springframework.stereotype.Service
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.client.DeliusClient
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.ProbationDeliveryUnitOverview
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.RegionAndTeamOverview
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.RegionDetails
@@ -14,12 +13,12 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.exception.EntityNotF
 
 @Service
 class GetRegionService(
-  private val deliusClient: DeliusClient,
+  private val probationEstateService: ProbationEstateService,
 ) {
-  suspend fun getAll(): Flow<RegionOverview> = deliusClient.getProbationEstate().providers.asFlow().map { RegionOverview(it.code, it.description) }
+  suspend fun getAll(): Flow<RegionOverview> = probationEstateService.getProbationEstate().providers.asFlow().map { RegionOverview(it.code, it.description) }
 
   suspend fun getRegionDetailsByCode(code: String): RegionDetails {
-    val provider = deliusClient.getProbationEstate().providers.firstOrNull { it.code == code }
+    val provider = probationEstateService.getProbationEstate().providers.firstOrNull { it.code == code }
       ?: throw EntityNotFoundException("Region with code $code not found")
 
     val pdus = provider.probationDeliveryUnits.map {
@@ -31,7 +30,7 @@ class GetRegionService(
 
   suspend fun getRegionAndTeamOverviews(teamCodes: List<String>): List<RegionAndTeamOverview> {
     val teamCodesAsSet: Set<String> = teamCodes.toSet()
-    val results = deliusClient.getProbationEstate().providers
+    val results = probationEstateService.getProbationEstate().providers
       .mapNotNull { provider ->
         val matchingTeams = provider.probationDeliveryUnits
           .flatMap { pdu -> pdu.localAdminUnits }

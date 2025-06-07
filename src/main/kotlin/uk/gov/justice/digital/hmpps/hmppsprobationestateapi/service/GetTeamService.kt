@@ -3,15 +3,14 @@ package uk.gov.justice.digital.hmpps.hmppsprobationestateapi.service
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import org.springframework.stereotype.Service
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.client.DeliusClient
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.ProbationDeliveryUnitOverview
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamDetails
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamOverview
 
 @Service
-class GetTeamService(private val deliusClient: DeliusClient) {
+class GetTeamService(private val probationEstateService: ProbationEstateService) {
 
-  suspend fun findTeamsByCode(codes: List<String>): Flow<TeamOverview> = deliusClient.getProbationEstate().providers
+  suspend fun findTeamsByCode(codes: List<String>): Flow<TeamOverview> = probationEstateService.getProbationEstate().providers
     .mapNotNull { provider ->
       val matchingTeams = provider.probationDeliveryUnits
         .flatMap { pdu -> pdu.localAdminUnits }
@@ -21,7 +20,7 @@ class GetTeamService(private val deliusClient: DeliusClient) {
     }.flatten().map { TeamOverview(it.code, it.description) }.asFlow()
 
   suspend fun findTeamDetailsByCode(teamCode: String): TeamDetails? {
-    val estate = deliusClient.getProbationEstate()
+    val estate = probationEstateService.getProbationEstate()
     estate.providers.forEach { provider ->
       provider.probationDeliveryUnits.forEach { pdu ->
         pdu.localAdminUnits.forEach { lau ->

@@ -1,19 +1,17 @@
 package uk.gov.justice.digital.hmpps.hmppsprobationestateapi.service
 
-import kotlinx.coroutines.flow.map
 import org.springframework.stereotype.Service
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.client.DeliusClient
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.ProbationDeliveryUnitDetails
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.RegionOverview
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamOverview
 
 @Service
 class GetProbationDeliveryUnitService(
-  private val deliusClient: DeliusClient,
+  private val probationEstateService: ProbationEstateService,
 ) {
 
   suspend fun getProbationDeliveryUnitDetailsByCode(pduCode: String): ProbationDeliveryUnitDetails? {
-    val estate = deliusClient.getProbationEstate()
+    val estate = probationEstateService.getProbationEstate()
 
     val (provider, pdu) = estate.providers
       .firstNotNullOfOrNull { provider ->
