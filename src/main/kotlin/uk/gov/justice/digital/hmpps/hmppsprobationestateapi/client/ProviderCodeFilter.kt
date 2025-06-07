@@ -7,12 +7,12 @@ import org.springframework.core.io.Resource
 import org.springframework.stereotype.Component
 
 @Component
-class TeamCodeFilter(@Value("classpath:config/filtered-team-codes.json") private val teamCodeResource: Resource) {
+class ProviderCodeFilter(@Value("classpath:config/filtered-provider-codes.json") private val providerCodeResource: Resource) {
 
   private val objectMapper = jacksonObjectMapper()
 
-  val includedTeamCodes: Set<String> by lazy {
-    teamCodeResource.inputStream.use { stream ->
+  val includedProviderCodes: Set<String> by lazy {
+    providerCodeResource.inputStream.use { stream ->
       objectMapper.readValue(stream)
     }
   }

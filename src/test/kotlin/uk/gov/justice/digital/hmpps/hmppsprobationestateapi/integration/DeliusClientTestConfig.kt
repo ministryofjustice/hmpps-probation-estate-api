@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClient
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository
 import org.springframework.web.reactive.function.client.WebClient
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.client.DeliusClient
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.client.ProviderCodeFilter
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.client.TeamCodeFilter
 
 @TestConfiguration
@@ -21,7 +22,11 @@ class DeliusClientTestConfig {
 
   @Bean
   fun teamCodeFilter(): TeamCodeFilter = TeamCodeFilter(
-    resource = ClassPathResource("config/filtered-team-codes.json"),
+    teamCodeResource = ClassPathResource("config/filtered-team-codes.json"),
+  )
+
+  @Bean fun providerCodeFilter(): ProviderCodeFilter = ProviderCodeFilter(
+    providerCodeResource = ClassPathResource("config/filtered-provider-codes.json"),
   )
 
   @Bean
@@ -31,5 +36,9 @@ class DeliusClientTestConfig {
   fun reactiveOAuth2AuthorizedClientService(): ReactiveOAuth2AuthorizedClientService = mockk(relaxed = true)
 
   @Bean
-  fun deliusClient(webClient: WebClient): DeliusClient = DeliusClient(webClient, teamCodeFilter())
+  fun deliusClient(webClient: WebClient): DeliusClient = DeliusClient(
+    webClient,
+    teamCodeFilter(),
+    providerCodeFilter(),
+  )
 }
