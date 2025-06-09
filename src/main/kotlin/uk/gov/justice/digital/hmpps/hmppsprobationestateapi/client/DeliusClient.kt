@@ -15,16 +15,21 @@ class DeliusClient(private val webClient: WebClient, private val teamCodeFilter:
       .uri("/probation-estate")
       .retrieve()
       .awaitBody<ProbationEstate>()
-    val filteredProviders = fullEstate.providers.filter { it.code in providerCodeFilter.includedProviderCodes }
-      .map { provider ->
-        val filteredPdus = provider.probationDeliveryUnits.map { pdu ->
-          val filteredLaus = pdu.localAdminUnits.map { lau ->
-            val filteredTeams = lau.teams.filter { it.code in teamCodeFilter.includedTeamCodes }
-            lau.copy(teams = filteredTeams)
+
+    val filteredProviders = fullEstate.providers
+      .filter { it.code in providerCodeFilter.includedProviderCodes }
+      .mapNotNull { provider ->
+        val filteredPdus = provider.probationDeliveryUnits
+          .mapNotNull { pdu ->
+            val filteredLaus = pdu.localAdminUnits
+              .mapNotNull { lau ->
+                val filteredTeams = lau.teams
+                  .filter { it.code in teamCodeFilter.includedTeamCodes }
+                if (filteredTeams.isNotEmpty()) lau.copy(teams = filteredTeams) else null
+              }
+            if (filteredLaus.isNotEmpty()) pdu.copy(localAdminUnits = filteredLaus) else null
           }
-          pdu.copy(localAdminUnits = filteredLaus)
-        }
-        provider.copy(probationDeliveryUnits = filteredPdus)
+        if (filteredPdus.isNotEmpty()) provider.copy(probationDeliveryUnits = filteredPdus) else null
       }
     return fullEstate.copy(providers = filteredProviders)
   }

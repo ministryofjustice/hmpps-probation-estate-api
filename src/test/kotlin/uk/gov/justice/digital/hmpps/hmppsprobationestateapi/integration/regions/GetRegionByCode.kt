@@ -7,93 +7,130 @@ import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.Integrat
 class GetRegionByCode : IntegrationTestBase() {
 
   @Test
-  fun `must get region and all PDUs associated`(): Unit = runBlocking {
+  fun `must get region and all PDUs associated`() = runBlocking {
     val mockResponse = """
-{
-  "providers": [
     {
-      "code": "RG1",
-      "description": "Region 1",
-      "probationDeliveryUnits": [
+      "providers": [
         {
-          "code": "PDU1",
-          "description": "PDU 1",
-          "localAdminUnits": []
-        },
-        {
-          "code": "PDU2",
-          "description": "PDU 2",
-          "localAdminUnits": []
+          "code": "RG1",
+          "description": "Region 1",
+          "probationDeliveryUnits": [
+            {
+              "code": "PDU1",
+              "description": "PDU 1",
+              "localAdminUnits": [
+                {
+                  "code": "LDU1",
+                  "description": "LDU 1",
+                  "teams": [
+                    { "code": "TEAM1", "description": "Team 1" }
+                  ]
+                }
+              ]
+            },
+            {
+              "code": "PDU2",
+              "description": "PDU 2",
+              "localAdminUnits": [
+                {
+                  "code": "LDU2",
+                  "description": "LDU 2",
+                  "teams": [
+                    { "code": "TEAM2", "description": "Team 2" }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }
-  ]
-}
     """.trimIndent()
 
     mockWebClientFactory.setJsonResponse(mockResponse)
 
-    val region = Pair("RG1", "Region 1")
-    val firstPdu = Pair("PDU1", "PDU 1")
-    val secondPdu = Pair("PDU2", "PDU 2")
-
     webTestClient.get()
-      .uri("/region/${region.first}")
+      .uri("/region/RG1")
       .exchange()
-      .expectStatus()
-      .isOk
+      .expectStatus().isOk
       .expectBody()
-      .jsonPath("$.code").isEqualTo(region.first)
-      .jsonPath("$.name").isEqualTo(region.second)
-      .jsonPath("$.probationDeliveryUnits.[?(@.code=='${firstPdu.first}')].name").isEqualTo(firstPdu.second)
-      .jsonPath("$.probationDeliveryUnits.[?(@.code=='${secondPdu.first}')].name").isEqualTo(secondPdu.second)
+      .jsonPath("$.code").isEqualTo("RG1")
+      .jsonPath("$.name").isEqualTo("Region 1")
+      .jsonPath("$.probationDeliveryUnits[?(@.code=='PDU1')].name").isEqualTo("PDU 1")
+      .jsonPath("$.probationDeliveryUnits[?(@.code=='PDU2')].name").isEqualTo("PDU 2")
   }
 
   @Test
-  fun `can get region without any PDUs`(): Unit = runBlocking {
-    val region = Pair("RG1", "Region 1")
+  fun `can get region without any PDUs`() = runBlocking {
     val mockResponse = """
-{
-  "providers": [
     {
-      "code": "RG1",
-      "description": "Region 1",
-      "probationDeliveryUnits": []
+      "providers": [
+        {
+          "code": "RG1",
+          "description": "Region 1",
+          "probationDeliveryUnits": []
+        }
+      ]
     }
-  ]
-}
     """.trimIndent()
 
     mockWebClientFactory.setJsonResponse(mockResponse)
 
     webTestClient.get()
-      .uri("/region/${region.first}")
+      .uri("/region/RG1")
       .exchange()
-      .expectStatus()
-      .isOk
+      .expectStatus().isOk
       .expectBody()
-      .jsonPath("$.code").isEqualTo(region.first)
-      .jsonPath("$.name").isEqualTo(region.second)
+      .jsonPath("$.code").isEqualTo("RG1")
+      .jsonPath("$.name").isEqualTo("Region 1")
       .jsonPath("$.probationDeliveryUnits").isEmpty
   }
 
   @Test
   fun `Not found when get region by code that doesn't exist`() {
     val mockResponse = """
-{
-  "providers": [
     {
-      "code": "RG1",
-      "description": "Region 1",
-      "probationDeliveryUnits": []
-    },
-    {
-      "code": "RG2",
-      "description": "Region 2",
-      "probationDeliveryUnits": []
+      "providers": [
+        {
+          "code": "RG1",
+          "description": "Region 1",
+          "probationDeliveryUnits": [
+            {
+              "code": "PDU1",
+              "description": "PDU 1",
+              "localAdminUnits": [
+                {
+                  "code": "LDU1",
+                  "description": "LDU 1",
+                  "teams": [
+                    { "code": "TEAM1", "description": "Team 1" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "RG2",
+          "description": "Region 2",
+          "probationDeliveryUnits": [
+            {
+              "code": "PDU2",
+              "description": "PDU 2",
+              "localAdminUnits": [
+                {
+                  "code": "LDU2",
+                  "description": "LDU 2",
+                  "teams": [
+                    { "code": "TEAM2", "description": "Team 2" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
-  ]
-}
     """.trimIndent()
 
     mockWebClientFactory.setJsonResponse(mockResponse)
@@ -101,7 +138,6 @@ class GetRegionByCode : IntegrationTestBase() {
     webTestClient.get()
       .uri("/region/NOREGIONHERE")
       .exchange()
-      .expectStatus()
-      .isNotFound
+      .expectStatus().isNotFound
   }
 }

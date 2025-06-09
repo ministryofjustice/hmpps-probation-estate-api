@@ -122,9 +122,9 @@ class GetAllEstateByRegionCode : IntegrationTestBase() {
       .isOk
       .expectBody()
       .jsonPath("$.${firstPdu.first}")
-      .exists()
+      .doesNotExist()
       .jsonPath("$.${firstPdu.first}.ldus.${firstPduLdu.first}")
-      .exists()
-      .jsonPath("$.${firstPdu.first}.ldus.${firstPduLdu.first}.teams").isEmpty
+      .doesNotExist()
+      .jsonPath("$.${firstPdu.first}.ldus.${firstPduLdu.first}.teams").doesNotExist()
   }
 }
