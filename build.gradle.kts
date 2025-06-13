@@ -33,10 +33,10 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.10.2")
 
-  implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.8")
+  implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.9")
 
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
-  testImplementation("io.mockk:mockk:1.13.10")
+  testImplementation("io.mockk:mockk:1.14.2")
 }
 
 java {
