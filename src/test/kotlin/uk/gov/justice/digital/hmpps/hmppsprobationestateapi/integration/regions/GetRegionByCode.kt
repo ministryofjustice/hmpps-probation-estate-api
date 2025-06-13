@@ -2,52 +2,142 @@ package uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.regions
 
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.ProbationDeliveryUnit
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.entities.Region
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.integration.IntegrationTestBase
 
 class GetRegionByCode : IntegrationTestBase() {
 
   @Test
-  fun `must get region and all PDUs associated`(): Unit = runBlocking {
-    val region = regionRepository.save(Region(code = "RG1", name = "Region 1", new = true))
-    val firstPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU1", name = "PDU 1", regionCode = region.code, new = true))
-    val secondPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "PDU2", name = "PDU 2", regionCode = region.code, new = true))
-    val deletedPdu = probationDeliveryUnitRepository.save(ProbationDeliveryUnit(code = "DELETEDPDU", name = "DELETED PDU", regionCode = region.code, softDeleted = true, new = true))
+  fun `must get region and all PDUs associated`() = runBlocking {
+    val mockResponse = """
+    {
+      "providers": [
+        {
+          "code": "RG1",
+          "description": "Region 1",
+          "probationDeliveryUnits": [
+            {
+              "code": "PDU1",
+              "description": "PDU 1",
+              "localAdminUnits": [
+                {
+                  "code": "LDU1",
+                  "description": "LDU 1",
+                  "teams": [
+                    { "code": "TEAM1", "description": "Team 1" }
+                  ]
+                }
+              ]
+            },
+            {
+              "code": "PDU2",
+              "description": "PDU 2",
+              "localAdminUnits": [
+                {
+                  "code": "LDU2",
+                  "description": "LDU 2",
+                  "teams": [
+                    { "code": "TEAM2", "description": "Team 2" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+    """.trimIndent()
+
+    mockWebClientFactory.setJsonResponse(mockResponse)
 
     webTestClient.get()
-      .uri("/region/${region.code}")
+      .uri("/region/RG1")
       .exchange()
-      .expectStatus()
-      .isOk
+      .expectStatus().isOk
       .expectBody()
-      .jsonPath("$.code").isEqualTo(region.code)
-      .jsonPath("$.name").isEqualTo(region.name)
-      .jsonPath("$.probationDeliveryUnits.[?(@.code=='${firstPdu.code}')].name").isEqualTo(firstPdu.name)
-      .jsonPath("$.probationDeliveryUnits.[?(@.code=='${secondPdu.code}')].name").isEqualTo(secondPdu.name)
-      .jsonPath("$.probationDeliveryUnits.[?(@.code=='${deletedPdu.code}')]").doesNotExist()
+      .jsonPath("$.code").isEqualTo("RG1")
+      .jsonPath("$.name").isEqualTo("Region 1")
+      .jsonPath("$.probationDeliveryUnits[?(@.code=='PDU1')].name").isEqualTo("PDU 1")
+      .jsonPath("$.probationDeliveryUnits[?(@.code=='PDU2')].name").isEqualTo("PDU 2")
   }
 
   @Test
-  fun `can get region without any PDUs`(): Unit = runBlocking {
-    val region = regionRepository.save(Region(code = "RG1", name = "Region 1", new = true))
+  fun `can get region without any PDUs`() = runBlocking {
+    val mockResponse = """
+    {
+      "providers": [
+        {
+          "code": "RG1",
+          "description": "Region 1",
+          "probationDeliveryUnits": []
+        }
+      ]
+    }
+    """.trimIndent()
+
+    mockWebClientFactory.setJsonResponse(mockResponse)
+
     webTestClient.get()
-      .uri("/region/${region.code}")
+      .uri("/region/RG1")
       .exchange()
-      .expectStatus()
-      .isOk
+      .expectStatus().isOk
       .expectBody()
-      .jsonPath("$.code").isEqualTo(region.code)
-      .jsonPath("$.name").isEqualTo(region.name)
+      .jsonPath("$.code").isEqualTo("RG1")
+      .jsonPath("$.name").isEqualTo("Region 1")
       .jsonPath("$.probationDeliveryUnits").isEmpty
   }
 
   @Test
   fun `Not found when get region by code that doesn't exist`() {
+    val mockResponse = """
+    {
+      "providers": [
+        {
+          "code": "RG1",
+          "description": "Region 1",
+          "probationDeliveryUnits": [
+            {
+              "code": "PDU1",
+              "description": "PDU 1",
+              "localAdminUnits": [
+                {
+                  "code": "LDU1",
+                  "description": "LDU 1",
+                  "teams": [
+                    { "code": "TEAM1", "description": "Team 1" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "RG2",
+          "description": "Region 2",
+          "probationDeliveryUnits": [
+            {
+              "code": "PDU2",
+              "description": "PDU 2",
+              "localAdminUnits": [
+                {
+                  "code": "LDU2",
+                  "description": "LDU 2",
+                  "teams": [
+                    { "code": "TEAM2", "description": "Team 2" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+    """.trimIndent()
+
+    mockWebClientFactory.setJsonResponse(mockResponse)
+
     webTestClient.get()
       .uri("/region/NOREGIONHERE")
       .exchange()
-      .expectStatus()
-      .isNotFound
+      .expectStatus().isNotFound
   }
 }

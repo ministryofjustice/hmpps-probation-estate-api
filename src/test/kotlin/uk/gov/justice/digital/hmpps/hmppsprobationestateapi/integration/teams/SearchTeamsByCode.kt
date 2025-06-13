@@ -7,32 +7,84 @@ class SearchTeamsByCode : IntegrationTestBase() {
 
   @Test
   fun `retrieve team by code`() {
-    val estateOverview = setupEstate()
+    val mockResponse = """
+{
+  "providers": [
+    {
+      "code": "REGION1",
+      "description": "Test Region",
+      "probationDeliveryUnits": [
+        {
+          "code": "PDU1",
+          "description": "PDU 1",
+          "localAdminUnits": [
+            {
+              "code": "LDU1",
+              "description": "LDU 1",
+              "teams": [
+                { "code": "TM1", "description": "Team 1" },
+                { "code": "TM2", "description": "Team 2" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+    """.trimIndent()
+
+    mockWebClientFactory.setJsonResponse(mockResponse)
+
+    val team1 = Pair("TM1", "Team 1")
     webTestClient.get()
-      .uri("/team/search?codes=${estateOverview.teams[0].code}")
+      .uri("/team/search?codes=${team1.first}")
       .exchange()
       .expectStatus()
       .isOk
       .expectBody()
-      .jsonPath("$.[0].code").isEqualTo(estateOverview.teams[0].code)
-      .jsonPath("$.[0].name").isEqualTo(estateOverview.teams[0].name)
+      .jsonPath("$.[0].code").isEqualTo(team1.first)
+      .jsonPath("$.[0].name").isEqualTo(team1.second)
   }
 
   @Test
   fun `retrieve multiple teams by codes`() {
-    val firstTeam = Triple("TM1", "Team 1", false)
-    val secondTeam = Triple("TM2", "Team 2", false)
-    val deletedTeam = Triple("DELETEDTEAM", "Deleted Team", true)
-    val estate = setupEstate(teams = listOf(firstTeam, secondTeam, deletedTeam))
+    val mockResponse = """
+{
+  "providers": [
+    {
+      "code": "REGION1",
+      "description": "Test Region",
+      "probationDeliveryUnits": [
+        {
+          "code": "PDU1",
+          "description": "PDU 1",
+          "localAdminUnits": [
+            {
+              "code": "LDU1",
+              "description": "LDU 1",
+              "teams": [
+                { "code": "TM1", "description": "Team 1" },
+                { "code": "TM2", "description": "Team 2" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+    """.trimIndent()
+    val firstTeam = Pair("TM1", "Team 1")
+    val secondTeam = Pair("TM2", "Team 2")
 
     webTestClient.get()
-      .uri("/team/search?codes=${estate.teams[0].code},${estate.teams[1].code},${estate.teams[2].code}")
+      .uri("/team/search?codes=${firstTeam.first},${secondTeam.first}")
       .exchange()
       .expectStatus()
       .isOk
       .expectBody()
-      .jsonPath("$.[?(@.code=='${estate.teams[0].code}')].name").isEqualTo(estate.teams[0].name)
-      .jsonPath("$.[?(@.code=='${estate.teams[1].code}')].name").isEqualTo(estate.teams[1].name)
-      .jsonPath("$.[?(@.code=='${estate.teams[2].code}')]").doesNotExist()
+      .jsonPath("$.[?(@.code=='${firstTeam.first}')].name").isEqualTo(firstTeam.second)
+      .jsonPath("$.[?(@.code=='${secondTeam.first}')].name").isEqualTo(secondTeam.second)
   }
 }

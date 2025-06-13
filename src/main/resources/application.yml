@@ -12,19 +12,6 @@ spring:
     name: hmpps-probation-estate-api
   codec:
     max-in-memory-size: 10MB
-  r2dbc:
-    url: "r2dbc:postgresql://${database.endpoint:localhost:5432}/${database.name:postgres}"
-    username: "${database.username:root}"
-    password: "${database.password:dev}"
-    pool:
-      max-life-time: -1
-    properties:
-      ssl: true
-      sslRootCert: /home/appuser/.postgresql/root.crt
-  flyway:
-    url: "jdbc:postgresql://${database.endpoint:localhost:5432}/${database.name:postgres}"
-    user: "${database.username:root}"
-    password: "${database.password:dev}"
   jackson:
     date-format: "yyyy-MM-dd HH:mm:ss"
     serialization:
@@ -33,6 +20,21 @@ spring:
     group:
       test:
         - "stdout"
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${oauth.endpoint.url}/.well-known/jwks.json
+      client:
+        registration:
+          workforce-allocations-to-delius-api:
+            provider: hmpps-auth
+            client-id: ${oauth.client.id}
+            client-secret: ${oauth.client.secret}
+            authorization-grant-type: client_credentials
+        provider:
+          hmpps-auth:
+            token-uri: ${oauth.endpoint.url}/oauth/token
 
 server:
   port: 8080

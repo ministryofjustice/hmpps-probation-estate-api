@@ -1,1 +1,0 @@
-ALTER TABLE team DROP COLUMN pdu_code;

@@ -1,1 +1,0 @@
-INSERT INTO team (code, name, ldu_code) VALUES('N54A11', 'Awaiting Allocation Gateshead and S Tyneside', 'N54NST');

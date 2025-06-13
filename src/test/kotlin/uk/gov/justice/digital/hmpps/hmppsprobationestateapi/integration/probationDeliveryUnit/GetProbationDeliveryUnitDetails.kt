@@ -8,45 +8,86 @@ class GetProbationDeliveryUnitDetails : IntegrationTestBase() {
 
   @Test
   fun `must get PDU and all teams associated`(): Unit = runBlocking {
-    val firstTeam = Triple("TM1", "Team 1", false)
-    val secondTeam = Triple("TM2", "Team 2", false)
-    val deletedTeam = Triple("DELETEDTEAM", "Deleted Team", true)
-    val estate = setupEstate(teams = listOf(firstTeam, secondTeam, deletedTeam))
+    val mockResponse = """
+{
+  "providers": [
+    {
+      "code": "REGION1",
+      "description": "Region Name",
+      "probationDeliveryUnits": [
+        {
+          "code": "PDU1",
+          "description": "PDU Name",
+          "localAdminUnits": [
+            {
+              "code": "LDU1",
+              "description": "LDU 1",
+              "teams": [
+                { "code": "TM1", "description": "Team 1" },
+                { "code": "TM2", "description": "Team 2" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+    """.trimIndent()
+
+    mockWebClientFactory.setJsonResponse(mockResponse)
+
+    val regionCode: String = "REGION1"
+    val regionName: String = "Region Name"
+    val pduCode: String = "PDU1"
+    val pduName: String = "PDU Name"
+    val firstTeam = Pair("TM1", "Team 1")
+    val secondTeam = Pair("TM2", "Team 2")
 
     webTestClient.get()
-      .uri("/probationDeliveryUnit/${estate.probationDeliveryUnit.code}")
+      .uri("/probationDeliveryUnit/$pduCode")
       .exchange()
       .expectStatus()
       .isOk
       .expectBody()
-      .jsonPath("$.code").isEqualTo(estate.probationDeliveryUnit.code)
-      .jsonPath("$.name").isEqualTo(estate.probationDeliveryUnit.name)
-      .jsonPath("$.region.code").isEqualTo(estate.region.code)
-      .jsonPath("$.region.name").isEqualTo(estate.region.name)
-      .jsonPath("$.teams.[?(@.code=='${estate.teams[0].code}')].name").isEqualTo(estate.teams[0].name)
-      .jsonPath("$.teams.[?(@.code=='${estate.teams[1].code}')].name").isEqualTo(estate.teams[1].name)
-      .jsonPath("$.teams.[?(@.code=='${estate.teams[2].code}')]").doesNotExist()
-  }
-
-  @Test
-  fun `can get PDU without any teams`(): Unit = runBlocking {
-    val estate = setupEstate()
-    teamRepository.deleteAll()
-    webTestClient.get()
-      .uri("/probationDeliveryUnit/${estate.probationDeliveryUnit.code}")
-      .exchange()
-      .expectStatus()
-      .isOk
-      .expectBody()
-      .jsonPath("$.code").isEqualTo(estate.probationDeliveryUnit.code)
-      .jsonPath("$.name").isEqualTo(estate.probationDeliveryUnit.name)
-      .jsonPath("$.region.code").isEqualTo(estate.region.code)
-      .jsonPath("$.region.name").isEqualTo(estate.region.name)
-      .jsonPath("$.teams").isEmpty
+      .jsonPath("$.code").isEqualTo(pduCode)
+      .jsonPath("$.name").isEqualTo(pduName)
+      .jsonPath("$.region.code").isEqualTo(regionCode)
+      .jsonPath("$.region.name").isEqualTo(regionName)
+      .jsonPath("$.teams.[?(@.code=='${firstTeam.first}')].name").isEqualTo(firstTeam.second)
+      .jsonPath("$.teams.[?(@.code=='${secondTeam.first}')].name").isEqualTo(secondTeam.second)
   }
 
   @Test
   fun `Not found when get PDU by code that doesn't exist`() {
+    val mockResponse = """
+{
+  "providers": [
+    {
+      "code": "REGION1",
+      "description": "Region Name",
+      "probationDeliveryUnits": [
+        {
+          "code": "PDU1",
+          "description": "PDU Name",
+          "localAdminUnits": [
+            {
+              "code": "LDU1",
+              "description": "LDU 1",
+              "teams": [
+                { "code": "TM1", "description": "Team 1" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+    """.trimIndent()
+
+    mockWebClientFactory.setJsonResponse(mockResponse)
+
     webTestClient.get()
       .uri("/probationDeliveryUnit/NOPDUHERE")
       .exchange()

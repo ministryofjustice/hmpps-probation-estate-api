@@ -1,23 +1,27 @@
 package uk.gov.justice.digital.hmpps.hmppsprobationestateapi.service
 
-import kotlinx.coroutines.flow.toList
 import org.springframework.stereotype.Service
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.AllLocalDeliveryUnit
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.AllProbationDeliveryUnit
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.TeamOverview
-import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.db.repositories.AllEstateRegionRepository
 
 @Service
-class AllEstateService(private val allEstateRegionRepository: AllEstateRegionRepository) {
+class AllEstateService(private val probationEstateService: ProbationEstateService) {
 
-  suspend fun getEstateByRegionCode(code: String): Map<String, AllProbationDeliveryUnit> = allEstateRegionRepository.findAllEstateByRegionCode(code)
-    .toList()
-    .groupBy { it.pduCode }
-    .mapValues { pdus ->
-      AllProbationDeliveryUnit(
-        pdus.value[0].pduName,
-        pdus.value.groupBy { it.lduCode }
-          .mapValues { ldu -> AllLocalDeliveryUnit(ldu.value[0].lduName, ldu.value.map { TeamOverview(it.teamCode, it.teamName) }) },
-      )
+  suspend fun getEstateByRegionCode(code: String): Map<String, AllProbationDeliveryUnit> {
+    val estate = probationEstateService.getProbationEstate()
+    val provider = estate.providers.firstOrNull { it.code == code } ?: return emptyMap()
+
+    return provider.probationDeliveryUnits.associate { pdu ->
+      val ldus = pdu.localAdminUnits.associate { lau ->
+        lau.code to AllLocalDeliveryUnit(
+          name = lau.description,
+          teams = lau.teams.map { team ->
+            TeamOverview(code = team.code, name = team.description)
+          },
+        )
+      }
+      pdu.code to AllProbationDeliveryUnit(name = pdu.description, ldus = ldus)
     }
+  }
 }

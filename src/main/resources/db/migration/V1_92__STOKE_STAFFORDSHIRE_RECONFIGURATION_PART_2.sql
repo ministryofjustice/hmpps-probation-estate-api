@@ -1,1 +1,0 @@
-INSERT INTO team (code, name, ldu_code) values('N52SAS', 'IOM Staffordshire North', 'N52STO');
