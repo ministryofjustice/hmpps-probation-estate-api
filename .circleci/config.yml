@@ -14,9 +14,7 @@ parameters:
 jobs:
   validate:
     executor:
-      name: hmpps/java_postgres
-      jdk_tag: "21.0"
-      postgres_tag: "15"
+      name: hmpps/java
     steps:
       - checkout
       - restore_cache:
