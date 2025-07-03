@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.AllProbationDeliveryUnit
+import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.controller.dto.AllRegionDeliveryUnit
 import uk.gov.justice.digital.hmpps.hmppsprobationestateapi.service.AllEstateService
 
 @RestController
@@ -24,4 +25,14 @@ class AllEstateController(private val allEstateService: AllEstateService) {
   )
   @GetMapping("/all/region/{regionCode}")
   suspend fun getEstateByRegionCode(@PathVariable(required = true) regionCode: String): Map<String, AllProbationDeliveryUnit> = allEstateService.getEstateByRegionCode(regionCode)
+
+  @Operation(summary = "Get all probation estate")
+  @ApiResponses(
+    value = [
+      ApiResponse(responseCode = "200", description = "OK"),
+      ApiResponse(responseCode = "404", description = "Result Not Found"),
+    ],
+  )
+  @GetMapping("/all/regions")
+  suspend fun getAllEstate(): Map<String, AllRegionDeliveryUnit> = allEstateService.getEntireEstate()
 }
