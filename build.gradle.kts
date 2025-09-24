@@ -1,7 +1,7 @@
 plugins {
-  id("org.owasp.dependencycheck") version "12.1.3"
-  id("uk.gov.justice.hmpps.gradle-spring-boot") version "9.0.1"
-  kotlin("plugin.spring") version "2.2.10"
+  id("org.owasp.dependencycheck") version "12.1.6"
+  id("uk.gov.justice.hmpps.gradle-spring-boot") version "9.1.1"
+  kotlin("plugin.spring") version "2.2.20"
 }
 
 ktlint {
