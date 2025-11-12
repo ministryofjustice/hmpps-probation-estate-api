@@ -1,5 +1,5 @@
 plugins {
-  id("org.owasp.dependencycheck") version "12.1.8"
+  id("org.owasp.dependencycheck") version "12.1.9"
   id("uk.gov.justice.hmpps.gradle-spring-boot") version "9.1.4"
   kotlin("plugin.spring") version "2.2.21"
 }
@@ -35,7 +35,7 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.10.2")
 
-  implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.13")
+  implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.14")
 
   testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
   testImplementation("io.mockk:mockk:1.14.6")
