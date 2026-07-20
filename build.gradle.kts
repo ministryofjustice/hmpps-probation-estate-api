@@ -14,11 +14,6 @@ configurations {
   testImplementation { exclude(group = "org.junit.vintage") }
 }
 
-dependencyCheck {
-  suppressionFiles.add("suppressions.xml")
-  nvd.datafeedUrl = "file:///opt/vulnz/cache"
-}
-
 dependencies {
 
   implementation("org.springframework.boot:spring-boot-starter-security")
