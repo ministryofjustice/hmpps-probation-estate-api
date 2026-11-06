@@ -1,6 +1,6 @@
 plugins {
   id("org.owasp.dependencycheck") version "12.2.0"
-  id("uk.gov.justice.hmpps.gradle-spring-boot") version "11.0.11"
+  id("uk.gov.justice.hmpps.gradle-spring-boot") version "11.0.15"
   kotlin("plugin.spring") version "2.3.0"
 }
 
